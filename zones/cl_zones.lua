@@ -2,9 +2,15 @@
 BY Rejox#7975 © RX
 --]]
 
-local zones = {}
+local zones = nil
 
 function InitializeZones()
+    if zones ~= nil then
+        return
+    else
+        zones = {}
+    end
+
     for map, values in pairs(Config.Maps) do
         zones[map] = PolyZone:Create(values.Zone, { 
             name = map,
