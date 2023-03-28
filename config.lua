@@ -14,7 +14,22 @@ Config.JoinLobby = {
         Color = 1,
         Scale = 0.8,
     },
-    Coords = vector4(5121.3940, -5083.2788, 2.3973, 162.5292),
+    Coords = vector4(1241.8115, -3322.9658, 6.0288, 261.8552),
+}
+
+Config.KillLevels = {
+    [1] = {
+        label = "Level One",
+        weapon = "WEAPON_PISTOL",
+    },
+    [2] = {
+        label = "Level Two",
+        weapon = "WEAPON_MINISMG",
+    },
+    [3] = {
+        label = "Level Three",
+        weapon = "WEAPON_ASSAULTRIFLE",
+    }
 }
 
 Config.Maps = {

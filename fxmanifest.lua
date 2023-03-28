@@ -15,6 +15,7 @@ shared_script {
 
 client_scripts {
     '@PolyZone/client.lua',
+    'utils/cl_utils.lua',
     'lobby/cl_lobby.lua',
     'zones/cl_zones.lua',
 }
