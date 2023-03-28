@@ -16,11 +16,12 @@ shared_script {
 client_scripts {
     '@PolyZone/client.lua',
     'utils/cl_utils.lua',
+    'game/cl_game.lua',
     'lobby/cl_lobby.lua',
     'zones/cl_zones.lua',
 }
 server_scripts {
-    'server.lua',
+    'game/sv_game.lua',
 }
 
 dependencies {

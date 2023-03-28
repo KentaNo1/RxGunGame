@@ -14,7 +14,7 @@ Config.JoinLobby = {
         Color = 1,
         Scale = 0.8,
     },
-    Coords = vector4(1241.8115, -3322.9658, 6.0288, 261.8552),
+    Coords = vector4(5086.4097, -5177.2280, 2.0630, 173.7285),
 }
 
 Config.KillLevels = {

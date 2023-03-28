@@ -27,7 +27,7 @@ CreateThread(function()
             if distance <= 1.7 then
                 ShowHelpNotification("Press ~INPUT_CONTEXT~ to join the GunGame lobby")
                 if IsControlJustPressed(0, 38) then
-                    print("Enterin GunGame")
+                    TriggerServerEvent("sv_game:joinGunGame")
                 end
             end
         end
