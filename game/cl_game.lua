@@ -2,6 +2,8 @@
 BY Rejox#7975 © RX
 --]]
 
+local isDead = false
+
 -- HELPER COMMANDS FOR DEV --
 RegisterCommand('leavegungame', function (source, args, raw)
     TriggerServerEvent("sv_game:leaveGunGame")
@@ -11,6 +13,21 @@ RegisterCommand('tptogungame', function (source, args, raw)
     SetEntityCoords(PlayerPedId(), Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z)
 end)
 
+local function revivePlayer()
+    local playerPed = PlayerPedId()
+
+    SetEntityHealth(playerPed, GetEntityMaxHealth(playerPed))
+    ClearPedBloodDamage(playerPed)
+    SetPlayerSprint(PlayerId(), true)
+    ResetPedMovementClipset(playerPed, 0.0)
+    ClearPedTasksImmediately(playerPed)
+
+    if isDead then
+        StopScreenEffect("DeathFailOut")
+        isDead = false
+    end
+end
+
 local function spawnPlayer()
     DoScreenFadeOut(300)
     while not IsScreenFadedOut() do Wait(0) end
@@ -18,6 +35,7 @@ local function spawnPlayer()
     local playerPed = PlayerPedId()
     local randomSpawnPoint = Config.Maps[GlobalState[States.Global.CurrentMap]].SpawnPoints[math.random(1, #Config.Maps[GlobalState[States.Global.CurrentMap]].SpawnPoints)]
 
+    revivePlayer()
     NetworkResurrectLocalPlayer(randomSpawnPoint, false, false)
 
     local currentLevel = LocalPlayer.state[States.Player.CurrentLevel]
@@ -45,6 +63,19 @@ local function onDeath(victimPed, killerPed)
     local killerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(killerPed))
 
     TriggerServerEvent("sv_game:onDeath", victimId, killerId)
+
+    StartScreenEffect("DeathFailOut", 0, false)
+    isDead = true
+
+    local respawnTimer = Config.Maps[GlobalState[States.Global.CurrentMap]].RespawnTime
+    while respawnTimer > 0 do
+        Wait(1000)
+        respawnTimer = respawnTimer - 1
+    end
+
+    if LocalPlayer.state[States.Player.InGame] then
+        spawnPlayer()
+    end
 end
 
 RegisterNetEvent("cl_game:joinGunGame", function ()
@@ -77,6 +108,7 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
     while not IsScreenFadedOut() do Wait(0) end
 
     NetworkResurrectLocalPlayer(Config.JoinLobby.Coords, false, false)
+    revivePlayer()
     DeleteZone()
 
     while LocalPlayer.state[States.Player.InGame] do Wait(0) end
