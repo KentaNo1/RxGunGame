@@ -35,7 +35,8 @@ end
 
 RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
-    local playerPed = GetPlayerPed(src)
+    
+    Player(src).state:set(States.Player.CurrentLevel, 1, true)
 
     TriggerClientEvent("cl_game:joinGunGame", src)
     Wait(300)
@@ -56,6 +57,14 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
 
     Player(src).state:set(States.Player.InGame, false, true)
     GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] - 1
+end)
+
+AddEventHandler('playerDropped', function()
+    local src = source
+
+    if Player(src).state[States.Player.InGame] then
+        GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] - 1
+    end
 end)
 
 CreateThread(function()

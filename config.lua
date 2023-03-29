@@ -4,7 +4,6 @@ BY Rejox#7975 © RX
 
 Config = {}
 
-
 Config.JoinLobby = {
     Blip = {
         Active = true,
@@ -13,23 +12,23 @@ Config.JoinLobby = {
         Color = 1,
         Scale = 0.8,
     },
-    Coords = vector4(5086.4097, -5177.2280, 2.0630, 173.7285),
+    Coords = vector4(5086.4097, -5177.2280, 2.0630, 173.7285)
 }
 
--- Config.KillLevels = {
-    --     [1] = {
-        --         label = "Level One",
-        --         weapon = "WEAPON_PISTOL",
-        --     },
-        --     [2] = {
---         label = "Level Two",
---         weapon = "WEAPON_MINISMG",
---     },
---     [3] = {
-    --         label = "Level Three",
-    --         weapon = "WEAPON_ASSAULTRIFLE",
-    --     }
-    -- }
+Config.Levels = {
+    [1] = {
+        Label = "Level One",
+        Weapon = "WEAPON_SNSPISTOL",
+    },
+    [2] = {
+        Label = "Level Two",
+        Weapon = "WEAPON_HEAVYPISTOL",
+    },
+    [3] = {
+        Label = "Level Three",
+        Weapon = "WEAPON_ASSAULTRIFLE",
+    }
+}
     
     Config.Maps = {
         ["Island"] = {
@@ -79,6 +78,7 @@ States.Global = {
 -- PlayerStates
 States.Player = {
     InGame = 'RX:GunGame:InGame',
+    CurrentLevel = 'RX:GunGame:CurrentLevel',
 }
 
 

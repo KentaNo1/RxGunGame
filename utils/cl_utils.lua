@@ -33,3 +33,20 @@ function SecondsToSecondsAndMinutes(seconds)
     local seconds = seconds % 60
     return string.format("%02d:%02d", minutes, seconds)
 end
+
+function RequestWeapon(weapon)
+    local weaponHash = GetHashKey(weapon)
+    
+    if not IsWeaponValid(weaponHash) then
+        return
+    end
+
+    if not HasWeaponAssetLoaded(weaponHash) then
+        RequestWeaponAsset(weaponHash, 31, 0)
+        while not HasWeaponAssetLoaded(weaponHash) do
+            Wait(1)
+        end
+    end
+
+    return weapon
+end
