@@ -11,10 +11,10 @@ function InitializeZone()
         zone = {}
     end
 
-    local activeMap = GlobalState.ActiveMap
+    local currentMap = GlobalState[States.Global.CurrentMap]
 
-    zone = PolyZone:Create(Config.Maps[activeMap].Zone, { 
-        name = activeMap,
+    zone = PolyZone:Create(Config.Maps[currentMap].Zone, { 
+        name = currentMap,
         minZ = 0,
         maxZ = 150,
         debugPoly = true,
@@ -32,7 +32,7 @@ function InitializeZone()
             LocalPlayer.state:set("outsideZone", true, true)
 
             CreateThread(function()
-                local maximumOutOfZoneTime = Config.Maps[activeMap].MaximumOutOfZoneTime
+                local maximumOutOfZoneTime = Config.Maps[currentMap].MaximumOutOfZoneTime
 
                 while LocalPlayer.state.outsideZone and maximumOutOfZoneTime > 0 do
                     Wait(1000)
@@ -50,5 +50,7 @@ function InitializeZone()
 end
 
 function DeleteZone()
-    zone:destroy()
+    if zone then
+        zone:destroy()
+    end
 end

@@ -2,28 +2,31 @@
 BY Rejox#7975 © RX
 --]]
 
-GlobalState['RX:GunGame:ActiveGame'] = false
-GlobalState['RX:GunGame:CurrentMap'] = nil
-GlobalState['RX:GunGame:PlayersInGame'] = 0
-GlobalState['RX:GunGame:RoundTimeLeft'] = nil
+GlobalState[States.Global.GameActive] = false
+GlobalState[States.Global.CurrentMap] = nil
+GlobalState[States.Global.PlayersInGame] = 0
+GlobalState[States.Global.RoundTimeLeft] = nil
+
+GunGame = {}
+GunGame.Players = {}
 
 local function finishGame()
-    GlobalState['RX:GunGame:ActiveGame'] = false
-    GlobalState['RX:GunGame:CurrentMap'] = nil
-    GlobalState['RX:GunGame:PlayersInGame'] = nil
-    GlobalState['RX:GunGame:RoundTimeLeft'] = nil
+    GlobalState[States.Global.GameActive] = false
+    GlobalState[States.Global.CurrentMap] = nil
+    GlobalState[States.Global.PlayersInGame] = 0
+    GlobalState[States.Global.RoundTimeLeft] = nil
 end
 
 local function startGame(map)
-    GlobalState['RX:GunGame:CurrentMap'] = map
-    GlobalState['RX:GunGame:PlayersInGame'] = 0
-    GlobalState['RX:GunGame:RoundTimeLeft'] = Config.Maps[map].RoundTime
-    GlobalState['RX:GunGame:ActiveGame'] = true
+    GlobalState[States.Global.CurrentMap] = map
+    GlobalState[States.Global.PlayersInGame] = 0
+    GlobalState[States.Global.RoundTimeLeft] = Config.Maps[map].RoundTime
+    GlobalState[States.Global.GameActive] = true
 
     Citizen.CreateThread(function()
-        while GlobalState['RX:GunGame:ActiveGame'] and GlobalState['RX:GunGame:RoundTimeLeft'] > 0 do
+        while GlobalState[States.Global.GameActive] and GlobalState[States.Global.RoundTimeLeft] > 0 do
             Wait(1000)
-            GlobalState['RX:GunGame:RoundTimeLeft'] = GlobalState['RX:GunGame:RoundTimeLeft'] - 1
+            GlobalState[States.Global.RoundTimeLeft] = GlobalState[States.Global.RoundTimeLeft] - 1
         end
 
         finishGame()
@@ -33,26 +36,32 @@ end
 RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
 
-    Player(src).state:set("RX:GunGame:inGame", true, true)
-    GlobalState['RX:GunGame:PlayersInGame'] = GlobalState['RX:GunGame:PlayersInGame'] + 1
-
     TriggerClientEvent("cl_game:joinGunGame", src)
+    Wait(300)
+
+    SetPlayerRoutingBucket(src, Config.GunGameRoutingBucket)
+
+    Player(src).state:set(States.Player.InGame, true, true)
+    GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] + 1
 end)
 
 RegisterNetEvent("sv_game:leaveGunGame", function ()
     local src = source
 
-    Player(src).state:set("RX:GunGame:inGame", false, true)
-    GlobalState['RX:GunGame:PlayersInGame'] = GlobalState['RX:GunGame:PlayersInGame'] - 1
-
     TriggerClientEvent("cl_game:leaveGunGame", src)
+    Wait(300)
+
+    SetPlayerRoutingBucket(src, Config.DefaultRoutingBucket)
+
+    Player(src).state:set(States.Player.InGame, false, true)
+    GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] - 1
 end)
 
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
 
-        if not GlobalState['RX:GunGame:ActiveGame'] then
+        if not GlobalState[States.Global.GameActive] then
             startGame("Island")
         end 
     end
