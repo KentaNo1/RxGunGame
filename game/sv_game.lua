@@ -23,7 +23,7 @@ local function startGame(map)
     GlobalState[States.Global.RoundTimeLeft] = Config.Maps[map].RoundTime
     GlobalState[States.Global.GameActive] = true
 
-    Citizen.CreateThread(function()
+    CreateThread(function()
         while GlobalState[States.Global.GameActive] and GlobalState[States.Global.RoundTimeLeft] > 0 do
             Wait(1000)
             GlobalState[States.Global.RoundTimeLeft] = GlobalState[States.Global.RoundTimeLeft] - 1
@@ -35,6 +35,7 @@ end
 
 RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
+    local playerPed = GetPlayerPed(src)
 
     TriggerClientEvent("cl_game:joinGunGame", src)
     Wait(300)
@@ -57,9 +58,9 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
     GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] - 1
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-        Citizen.Wait(1000)
+        Wait(1000)
 
         if not GlobalState[States.Global.GameActive] then
             startGame("Island")
