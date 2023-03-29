@@ -2,55 +2,53 @@
 BY Rejox#7975 © RX
 --]]
 
-local zones = nil
+local zone = nil
 
-function InitializeZones()
-    if zones ~= nil then
+function InitializeZone()
+    if zone ~= nil then
         return
     else
-        zones = {}
+        zone = {}
     end
 
-    for map, values in pairs(Config.Maps) do
-        zones[map] = PolyZone:Create(values.Zone, { 
-            name = map,
-            minZ = 0,
-            maxZ = 150,
-            debugPoly = true,
-            debugColors = {
-                walls = { 255, 0, 0 },
-                outline = { 0, 0, 0 },
-                grid = { 0, 255, 0 },
-            }
-        })
-    
-        zones[map]:onPlayerInOut(function(inside, point)
-            if inside then
-                LocalPlayer.state:set("outsideZone", false, true)
-            else
-                LocalPlayer.state:set("outsideZone", true, true)
+    local activeMap = GlobalState.ActiveMap
 
-                CreateThread(function()
-                    local maximumOutOfZoneTime = Config.Maps[map].MaximumOutOfZoneTime
+    zone = PolyZone:Create(Config.Maps[activeMap].Zone, { 
+        name = activeMap,
+        minZ = 0,
+        maxZ = 150,
+        debugPoly = true,
+        debugColors = {
+            walls = { 255, 0, 0 },
+            outline = { 0, 0, 0 },
+            grid = { 0, 255, 0 },
+        }
+    })
 
-                    while LocalPlayer.state.outsideZone and maximumOutOfZoneTime > 0 do
-                        Wait(1000)
-                        maximumOutOfZoneTime = maximumOutOfZoneTime - 1
+    zone:onPlayerInOut(function(inside, point)
+        if inside then
+            LocalPlayer.state:set("outsideZone", false, true)
+        else
+            LocalPlayer.state:set("outsideZone", true, true)
 
-                        print(maximumOutOfZoneTime)
+            CreateThread(function()
+                local maximumOutOfZoneTime = Config.Maps[activeMap].MaximumOutOfZoneTime
 
-                        if maximumOutOfZoneTime == 0 then
-                            TriggerServerEvent("sv_game:leaveGunGame")
-                        end
+                while LocalPlayer.state.outsideZone and maximumOutOfZoneTime > 0 do
+                    Wait(1000)
+                    maximumOutOfZoneTime = maximumOutOfZoneTime - 1
+
+                    print(maximumOutOfZoneTime)
+
+                    if maximumOutOfZoneTime == 0 then
+                        TriggerServerEvent("sv_game:leaveGunGame")
                     end
-                end)
-            end
-        end)
-    end
+                end
+            end)
+        end
+    end)
 end
 
-function DeleteZones()
-    for map, zone in pairs(zones) do
-        zone:destroy()
-    end
+function DeleteZone()
+    zone:destroy()
 end

@@ -4,7 +4,7 @@ BY Rejox#7975 © RX
 
 Config = {}
 
-Config.RoutingBucket = 29
+-- Config.RoutingBucket = 29
 
 Config.JoinLobby = {
     Blip = {
@@ -17,20 +17,20 @@ Config.JoinLobby = {
     Coords = vector4(5086.4097, -5177.2280, 2.0630, 173.7285),
 }
 
-Config.KillLevels = {
-    [1] = {
-        label = "Level One",
-        weapon = "WEAPON_PISTOL",
-    },
-    [2] = {
-        label = "Level Two",
-        weapon = "WEAPON_MINISMG",
-    },
-    [3] = {
-        label = "Level Three",
-        weapon = "WEAPON_ASSAULTRIFLE",
-    }
-}
+-- Config.KillLevels = {
+--     [1] = {
+--         label = "Level One",
+--         weapon = "WEAPON_PISTOL",
+--     },
+--     [2] = {
+--         label = "Level Two",
+--         weapon = "WEAPON_MINISMG",
+--     },
+--     [3] = {
+--         label = "Level Three",
+--         weapon = "WEAPON_ASSAULTRIFLE",
+--     }
+-- }
 
 Config.Maps = {
     ["Island"] = {
