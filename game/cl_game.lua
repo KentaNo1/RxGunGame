@@ -40,8 +40,7 @@ local function spawnPlayer()
 
     local currentLevel = LocalPlayer.state[States.Player.CurrentLevel]
     local weapon = RequestWeapon(Config.Levels[currentLevel].Weapon)
-    GiveWeaponToPed(playerPed, GetHashKey(weapon), 250, false, true)
-    SetPedInfiniteAmmo(playerPed, true, GetHashKey(weapon))
+    GiveWeaponToPed(playerPed, GetHashKey(weapon), 9999, false, true)
 
     CreateThread(function()
         while not LocalPlayer.state[States.Player.InGame] do Wait(0) end
@@ -49,7 +48,7 @@ local function spawnPlayer()
         SetEntityAlpha(playerPed, 102, false)
         SetLocalPlayerAsGhost(true)
 
-        Wait(3000)
+        Wait(Config.Maps[GlobalState[States.Global.CurrentMap]].InvincibleOnSpawnTime * 1000)
 
         SetEntityAlpha(playerPed, 255, false)
         SetLocalPlayerAsGhost(false)
@@ -95,23 +94,42 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             local levelWeapon = Config.Levels[currentLevel].Weapon
 
             if currentWeapon ~= GetHashKey(levelWeapon) then
-                local weapon = RequestWeapon(levelWeapon)
-                GiveWeaponToPed(playerPed, GetHashKey(weapon), 250, false, true)
-                SetPedInfiniteAmmo(playerPed, true, GetHashKey(weapon))
+                if HasPedGotWeapon(playerPed, levelWeapon, false) then
+                    SetCurrentPedWeapon(playerPed, levelWeapon, true)
+                else
+                    local weapon = RequestWeapon(levelWeapon)
+                    GiveWeaponToPed(playerPed, GetHashKey(weapon), 9999, false, true)
+                end
+
+                currentWeapon = GetSelectedPedWeapon(playerPed)
+            end
+
+            if GetAmmoInPedWeapon(playerPed, currentWeapon) == 0 then
+                SetPedAmmo(playerPed, currentWeapon, 9999)
+            end
+
+            local _, currentAmmoInClip = GetAmmoInClip(playerPed, currentWeapon)
+            if currentAmmoInClip == 0 then
+                TaskReloadWeapon(playerPed)
             end
         end
     end)
 end)
 
 RegisterNetEvent("cl_game:leaveGunGame", function ()
+    local playerPed = PlayerPedId()
+
     DoScreenFadeOut(300)
     while not IsScreenFadedOut() do Wait(0) end
 
     NetworkResurrectLocalPlayer(Config.JoinLobby.Coords, false, false)
     revivePlayer()
     DeleteZone()
-
+    
     while LocalPlayer.state[States.Player.InGame] do Wait(0) end
+
+    RemoveAllPedWeapons(playerPed, true)
+
     DoScreenFadeIn(300)
 end)
 

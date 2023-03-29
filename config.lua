@@ -18,7 +18,7 @@ Config.JoinLobby = {
 Config.Levels = {
     [1] = {
         Label = "Level One",
-        Weapon = "WEAPON_SNSPISTOL",
+        Weapon = "WEAPON_ASSAULTRIFLE",
     },
     [2] = {
         Label = "Level Two",
@@ -34,6 +34,7 @@ Config.Levels = {
         ["Island"] = {
             RespawnTime = 10, -- In Seconds
             RoundTime = 720, -- In Seconds
+            InvincibleOnSpawnTime = 5, -- In Seconds
             MaximumOutOfZoneTime = 7, -- In Seconds
             MaximumPlayers = 16,
             SpawnPoints = {
