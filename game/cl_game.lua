@@ -12,6 +12,9 @@ RegisterCommand('tptogungame', function (source, args, raw)
 end)
 
 local function spawnPlayer()
+    DoScreenFadeOut(300)
+    while not IsScreenFadedOut() do Wait(0) end
+
     local playerPed = PlayerPedId()
     local randomSpawnPoint = Config.Maps[GlobalState[States.Global.CurrentMap]].SpawnPoints[math.random(1, #Config.Maps[GlobalState[States.Global.CurrentMap]].SpawnPoints)]
 
@@ -33,6 +36,8 @@ local function spawnPlayer()
         SetEntityAlpha(playerPed, 255, false)
         SetLocalPlayerAsGhost(false)
     end)
+
+    DoScreenFadeIn(300)
 end
 
 local function onDeath(victimPed, killerPed)
@@ -43,11 +48,8 @@ local function onDeath(victimPed, killerPed)
 end
 
 RegisterNetEvent("cl_game:joinGunGame", function ()
-    DoScreenFadeOut(300)
-    while not IsScreenFadedOut() do Wait(0) end
-
-    InitializeZone()
     spawnPlayer()
+    InitializeZone()
 
     while not LocalPlayer.state[States.Player.InGame] do Wait(0) end
 
@@ -68,8 +70,6 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             end
         end
     end)
-
-    DoScreenFadeIn(300)
 end)
 
 RegisterNetEvent("cl_game:leaveGunGame", function ()
