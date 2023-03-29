@@ -59,6 +59,16 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
     GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] - 1
 end)
 
+RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
+    local src = source
+
+    local currentKillerLevel = Player(killerId).state[States.Player.CurrentLevel]
+
+    if currentKillerLevel < #Config.Levels then
+        Player(killerId).state:set(States.Player.CurrentLevel, currentKillerLevel + 1, true)
+    end
+end)
+
 AddEventHandler('playerDropped', function()
     local src = source
 

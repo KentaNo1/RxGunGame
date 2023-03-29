@@ -35,6 +35,13 @@ local function spawnPlayer()
     end)
 end
 
+local function onDeath(victimPed, killerPed)
+    local victimId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(victimPed))
+    local killerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(killerPed))
+
+    TriggerServerEvent("sv_game:onDeath", victimId, killerId)
+end
+
 RegisterNetEvent("cl_game:joinGunGame", function ()
     DoScreenFadeOut(300)
     while not IsScreenFadedOut() do Wait(0) end
@@ -74,4 +81,14 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
 
     while LocalPlayer.state[States.Player.InGame] do Wait(0) end
     DoScreenFadeIn(300)
+end)
+
+AddEventHandler('gameEventTriggered', function(event, data)
+    if event == "CEventNetworkEntityDamage" then
+        local victim, attacker, victimDied, weapon = data[1], data[2], data[4], data[7]
+        if not IsEntityAPed(victim) or not IsEntityAPed(attacker) then return end
+        if victimDied and NetworkGetPlayerIndexFromPed(victim) == PlayerId() and IsEntityDead(PlayerPedId()) then
+            onDeath(victim, attacker)
+        end
+    end
 end)
