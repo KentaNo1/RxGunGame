@@ -61,7 +61,7 @@ local function onDeath(victimPed, killerPed)
     CreateThread(function()
         while respawnTimer > 0 do
             Wait(0)
-            DrawScreenText("Respawn in " .. respawnTimer .. " seconds")
+            DrawScreenText("~s~Respawning in ~r~" .. respawnTimer .. " ~s~seconds")
         end
     end)
 

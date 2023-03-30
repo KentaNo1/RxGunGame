@@ -67,8 +67,8 @@ Database = {}
 
 function Database.UpdatePlayerStats(src)
     local license = GetLicense(src)
-    local kills = Server.GetKills(src)
-    local deaths = Server.GetDeaths(src)
+    local kills = Server.GetKills(src) ~= nil and Server.GetKills(src) or 0
+    local deaths = Server.GetDeaths(src) ~= nil and Server.GetDeaths(src) or 0
 
     MySQL.Async.execute('INSERT INTO `gungame_stats` (`identifier`, `kills`, `deaths`) VALUES (@identifier, @kills, @deaths) ON DUPLICATE KEY UPDATE `kills` = `kills` + @kills, `deaths` = `deaths` + @deaths', {
         ['@identifier'] = license,

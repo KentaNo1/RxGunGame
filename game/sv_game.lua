@@ -27,11 +27,11 @@ local function leaveGunGame(src)
 end 
 
 local function finishGame()
-    GlobalState[States.Global.GameActive] = false
-
     for src, player in pairs(GunGame.Players) do
         leaveGunGame(src)
     end
+    
+    GlobalState[States.Global.GameActive] = false
 end
 
 local function startGame(map)
