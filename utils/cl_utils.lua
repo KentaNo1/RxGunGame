@@ -64,3 +64,11 @@ function Client.GetCurrentLevelWeapon()
     return weapon
 end
 
+function Client.GetOutsideZone()
+    return LocalPlayer.state[States.Player.OutsideZone]
+end
+
+function Client.SetOutsideZone(outside)
+    LocalPlayer.state:set(States.Player.OutsideZone, outside, true)
+end
+

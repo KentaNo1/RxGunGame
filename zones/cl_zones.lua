@@ -11,10 +11,10 @@ function InitializeZone()
         zone = {}
     end
 
-    local currentMap = GlobalState[States.Global.CurrentMap]
+    local currentMap = GetCurrentMap()
 
-    zone = PolyZone:Create(Config.Maps[currentMap].Zone, { 
-        name = currentMap,
+    zone = PolyZone:Create(currentMap.Zone, { 
+        name = currentMap.Label,
         minZ = 0,
         maxZ = 150,
         debugPoly = true,
@@ -27,18 +27,16 @@ function InitializeZone()
 
     zone:onPlayerInOut(function(inside, point)
         if inside then
-            LocalPlayer.state:set("outsideZone", false, true)
+            Client.SetOutsideZone(false)
         else
-            LocalPlayer.state:set("outsideZone", true, true)
+            Client.SetOutsideZone(true)
 
             CreateThread(function()
-                local maximumOutOfZoneTime = Config.Maps[currentMap].MaximumOutOfZoneTime
+                local maximumOutOfZoneTime = GetCurrentMap().MaximumOutOfZoneTime
 
-                while LocalPlayer.state.outsideZone and maximumOutOfZoneTime > 0 do
+                while Client.GetOutsideZone() and maximumOutOfZoneTime > 0 do
                     Wait(1000)
                     maximumOutOfZoneTime = maximumOutOfZoneTime - 1
-
-                    print(maximumOutOfZoneTime)
 
                     if maximumOutOfZoneTime == 0 then
                         TriggerServerEvent("sv_game:leaveGunGame")

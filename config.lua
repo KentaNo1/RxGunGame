@@ -81,6 +81,7 @@ States.Global = {
 States.Player = {
     InGame = 'RX:GunGame:InGame',
     CurrentLevel = 'RX:GunGame:CurrentLevel',
+    OutsideZone = 'RX:GunGame:OutsideZone',
 }
 
 
