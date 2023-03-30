@@ -10,11 +10,28 @@ GlobalState[States.Global.RoundTimeLeft] = nil
 GunGame = {}
 GunGame.Players = {}
 
+local function leaveGunGame(src)
+    if GunGame.Players[src] then
+        GunGame.Players[src] = nil
+    end
+
+    TriggerClientEvent("cl_game:leaveGunGame", src)
+    Wait(300)
+
+    SetPlayerRoutingBucket(src, Config.DefaultRoutingBucket)
+
+    Server.SetInGame(src, false)
+    Server.UpdatePlayersInGame(-1)
+    Database.UpdatePlayerStats(src)
+    Server.ResetPlayerStates(src)
+end 
+
 local function finishGame()
     GlobalState[States.Global.GameActive] = false
-    GlobalState[States.Global.CurrentMap] = nil
-    GlobalState[States.Global.PlayersInGame] = 0
-    GlobalState[States.Global.RoundTimeLeft] = nil
+
+    for src, player in pairs(GunGame.Players) do
+        leaveGunGame(src)
+    end
 end
 
 local function startGame(map)
@@ -36,6 +53,10 @@ end
 RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
     
+    if not GunGame.Players[src] then
+        GunGame.Players[src] = true
+    end
+
     Server.ResetPlayerStates(src)
 
     TriggerClientEvent("cl_game:joinGunGame", src)
@@ -50,15 +71,7 @@ end)
 RegisterNetEvent("sv_game:leaveGunGame", function ()
     local src = source
 
-    TriggerClientEvent("cl_game:leaveGunGame", src)
-    Wait(300)
-
-    SetPlayerRoutingBucket(src, Config.DefaultRoutingBucket)
-
-    Server.SetInGame(src, false)
-    Server.UpdatePlayersInGame(-1)
-    Database.UpdatePlayerStats(src)
-    Server.ResetPlayerStates(src)
+    leaveGunGame(src)
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)

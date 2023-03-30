@@ -57,6 +57,14 @@ local function onDeath(victimPed, killerPed)
     isDead = true
 
     local respawnTimer = GetCurrentMap().RespawnTime
+
+    CreateThread(function()
+        while respawnTimer > 0 do
+            Wait(0)
+            DrawScreenText("Respawn in " .. respawnTimer .. " seconds")
+        end
+    end)
+
     while respawnTimer > 0 do
         Wait(1000)
         respawnTimer = respawnTimer - 1
@@ -126,7 +134,9 @@ AddEventHandler('gameEventTriggered', function(event, data)
         local victim, attacker, victimDied, weapon = data[1], data[2], data[4], data[7]
         if not IsEntityAPed(victim) or not IsEntityAPed(attacker) then return end
         if victimDied and NetworkGetPlayerIndexFromPed(victim) == PlayerId() and IsEntityDead(PlayerPedId()) then
-            onDeath(victim, attacker)
+            if Client.GetInGame() then
+                onDeath(victim, attacker)
+            end
         end
     end
 end)

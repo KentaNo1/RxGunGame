@@ -4,6 +4,17 @@ BY Rejox#7975 © RX
 
 Client = {}
 
+function DrawScreenText(text)
+    SetTextCentre(true)
+    SetTextFont(4)
+    SetTextProportional(0)
+    SetTextScale(0.7, 0.7)
+    SetTextOutline()
+    SetTextEntry("STRING")
+    AddTextComponentString(text)
+    DrawText(0.5, 0.83)
+end
+
 function Draw3DText(x, y, z, text)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
     local pX, pY, pZ = table.unpack(GetGameplayCamCoords())
