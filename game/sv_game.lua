@@ -37,6 +37,8 @@ RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
     
     Server.SetCurrentLevel(src, 1)
+    Server.SetKills(src, 0)
+    Server.SetDeaths(src, 0)
 
     TriggerClientEvent("cl_game:joinGunGame", src)
     Wait(300)
@@ -60,18 +62,13 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
+    Server.SetKills(killerId, Server.GetKills(killerId) + 1)
+    Server.SetDeaths(victimId, Server.GetDeaths(victimId) + 1)
+
     local currentKillerLevel = Server.GetCurrentLevel(killerId)
 
     if currentKillerLevel < #Config.Levels then
         Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
-    end
-end)
-
-AddEventHandler('playerDropped', function()
-    local src = source
-
-    if Player(src).state[States.Player.InGame] then
-        Server.UpdatePlayersInGame(-1)
     end
 end)
 

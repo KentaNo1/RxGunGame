@@ -35,6 +35,9 @@ local function spawnPlayer()
     local playerPed = PlayerPedId()
     local randomSpawnPoint = GetRandomSpawnPoint()
 
+    local levelWeapon = Client.GetCurrentLevelWeapon()
+    GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
+
     revivePlayer()
     NetworkResurrectLocalPlayer(randomSpawnPoint, false, false)
 
