@@ -28,9 +28,9 @@ end
 
 local function finishGame(winnerId)
     if not winnerId then
-        TriggerClientEvent("chat:addMessage", -1, { args = { "^1GunGame", "Nobody won the game!" } })
+        Server.Notify(-1, "Nobody won the game!")
     else
-        TriggerClientEvent("chat:addMessage", -1, { args = { "^1GunGame", GetPlayerName(winnerId) .. " won the game!" } })
+        Server.Notify(-1, string.format("%s won the game!", GetPlayerName(winnerId)))
     end
 
     for src, player in pairs(GunGame.Players) do
@@ -93,12 +93,14 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
 
     if currentKillerLevel < #Config.Levels then
         Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
+        Server.Notify(killerId, string.format("You are now level %s!", currentKillerLevel + 1))
     end
 
     local currentVictimLevel = Server.GetCurrentLevel(victimId)
 
     if currentVictimLevel > 1 then
         Server.SetCurrentLevel(victimId, currentVictimLevel - 1)
+        Server.Notify(victimId, string.format("You are now level %s!", currentVictimLevel - 1))
     end
 end)
 
