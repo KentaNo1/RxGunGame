@@ -4,15 +4,6 @@ BY Rejox#7975 © RX
 
 local isDead = false
 
--- HELPER COMMANDS FOR DEV --
-RegisterCommand('leavegungame', function (source, args, raw)
-    TriggerServerEvent("sv_game:leaveGunGame")
-end)
-
-RegisterCommand('tptogungame', function (source, args, raw)
-    SetEntityCoords(PlayerPedId(), Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z)
-end)
-
 local function revivePlayer()
     local playerPed = PlayerPedId()
 

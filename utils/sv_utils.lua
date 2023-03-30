@@ -57,6 +57,12 @@ function Server.GetKDRatio(src)
     return kills / deaths
 end
 
+function Server.ResetPlayerStates(src)
+    Server.SetCurrentLevel(src, 1)
+    Server.SetKills(src, 0)
+    Server.SetDeaths(src, 0)
+end
+
 Database = {}
 
 function Database.UpdatePlayerStats(src)

@@ -36,9 +36,7 @@ end
 RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
     
-    Server.SetCurrentLevel(src, 1)
-    Server.SetKills(src, 0)
-    Server.SetDeaths(src, 0)
+    Server.ResetPlayerStates(src)
 
     TriggerClientEvent("cl_game:joinGunGame", src)
     Wait(300)
@@ -59,8 +57,8 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
 
     Server.SetInGame(src, false)
     Server.UpdatePlayersInGame(-1)
-
     Database.UpdatePlayerStats(src)
+    Server.ResetPlayerStates(src)
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)

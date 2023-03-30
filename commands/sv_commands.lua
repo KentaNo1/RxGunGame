@@ -6,11 +6,11 @@ RegisterCommand(Config.ResetLeaderboardCommand, function(source, args, rawComman
     local src = source
 
     if src == 0 then
-        MySQL.Async.execute("DELETE FROM gungame_leaderboard", {}, function()
+        MySQL.Async.execute("DELETE FROM gungame_stats", {}, function()
         end)
     else
         if IsPlayerAceAllowed(src, 'gungame.admin') then
-            MySQL.Async.execute("DELETE FROM gungame_leaderboard", {}, function()
+            MySQL.Async.execute("DELETE FROM gungame_stats", {}, function()
                 TriggerClientEvent('chat:addMessage', src, {
                     args = {"^1GunGame: ^0Leaderboard has been reset!"}
                 })
