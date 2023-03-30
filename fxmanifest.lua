@@ -33,6 +33,13 @@ server_scripts {
     'events/sv_events.lua',
 }
 
+ui_page 'html/index.html'
+
+files {
+    'html/index.html',
+    'html/script.js',
+}
+
 dependencies {
     'oxmysql',
     'PolyZone'
