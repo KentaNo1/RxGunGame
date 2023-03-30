@@ -61,7 +61,7 @@ local function onDeath(victimPed, killerPed)
     CreateThread(function()
         while respawnTimer > 0 and Client.GetInGame() do
             Wait(0)
-            DrawScreenText("~s~Respawning in ~r~" .. respawnTimer .. " ~s~seconds")
+            DrawScreenText("~s~Respawning in ~r~" .. respawnTimer .. " ~s~seconds", 0.5, 0.83, 0.7, 4, true, true)
         end
     end)
 
@@ -103,6 +103,13 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             if GetAmmoInPedWeapon(playerPed, currentWeapon) == 0 then
                 SetPedAmmo(playerPed, currentWeapon, 9999)
             end
+
+            local kills = Client.GetKills()
+            local deaths = Client.GetDeaths()
+            local level = Client.GetCurrentLevel()
+            local kd = Client.GetKDRatio()
+
+            DrawScreenText("~s~Kills: ~g~" .. kills .. " ~s~Deaths: ~r~" .. deaths .. " ~s~Level: ~y~" .. level .. " ~s~K/D: ~b~" .. kd, 0.5, 0.8, 0.7, 4, true, true)
         end
     end)
 end)

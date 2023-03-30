@@ -4,15 +4,14 @@ BY Rejox#7975 © RX
 
 Client = {}
 
-function DrawScreenText(text)
-    SetTextCentre(true)
-    SetTextFont(4)
-    SetTextProportional(0)
-    SetTextScale(0.7, 0.7)
-    SetTextOutline()
+function DrawScreenText(text, x, y, scale, font, center, outline)
+    if center then SetTextCentre(true) end
+    if font then SetTextFont(font) else SetTextFont(4) end
+    SetTextScale(scale, scale)
+    if outline then SetTextOutline() end
     SetTextEntry("STRING")
     AddTextComponentString(text)
-    DrawText(0.5, 0.83)
+    DrawText(x, y)
 end
 
 function Draw3DText(x, y, z, text)
@@ -82,4 +81,29 @@ end
 function Client.SetOutsideZone(outside)
     LocalPlayer.state:set(States.Player.OutsideZone, outside, true)
 end
+
+function Client.GetKills()
+    return LocalPlayer.state[States.Player.Kills]
+end
+
+function Client.GetDeaths()
+    return LocalPlayer.state[States.Player.Deaths]
+end
+
+function Client.GetKDRatio()
+    local kills = Client.GetKills()
+    local deaths = Client.GetDeaths()
+
+    if deaths == 0 then
+        return kills
+    end
+
+    return kills / deaths
+end
+
+function Client.GetCurrentLevel()
+    return LocalPlayer.state[States.Player.CurrentLevel]
+end
+
+
 
