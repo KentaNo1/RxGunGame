@@ -46,6 +46,10 @@ function Server.SetDeaths(src, deaths)
     Player(src).state:set(States.Player.Deaths, deaths, true)
 end
 
+function Server.GetInGame(src)
+    return Player(src).state[States.Player.InGame]
+end
+
 function Server.GetKDRatio(src)
     local kills = Server.GetKills(src)
     local deaths = Server.GetDeaths(src)
@@ -55,6 +59,14 @@ function Server.GetKDRatio(src)
     end
 
     return math.floor(kills / deaths * 100) / 100
+end
+
+function Server.GetStats(src)
+    return {
+        kills = Server.GetKills(src),
+        deaths = Server.GetDeaths(src),
+        kd = Server.GetKDRatio(src),
+    }
 end
 
 function Server.ResetPlayerStates(src)
@@ -98,4 +110,22 @@ function Database.UpdatePlayerStats(src)
         ['@kills'] = kills,
         ['@deaths'] = deaths
     })
+end
+
+function Database.GetTop20PlayerStats()
+    local top20PlayerStats = {}
+
+    local result = MySQL.query.await('SELECT * FROM `gungame_stats` ORDER BY `kills` DESC LIMIT 20')
+    if result then
+        for k, v in pairs(result) do
+            top20PlayerStats[#top20PlayerStats+1] = {
+                name = v.identifier,
+                kills = v.kills,
+                deaths = v.deaths,
+                kd = v.deaths == 0 and v.kills or math.floor(v.kills / v.deaths * 100) / 100
+            }
+        end
+    end
+    
+    return top20PlayerStats
 end

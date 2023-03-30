@@ -1,7 +1,21 @@
 window.addEventListener('message', (event) => {
     switch (event.data.action) {
-        case 'showScoreboard':
+        case 'showBoard':
             var topPlayers = JSON.parse(event.data.topPlayers);
+            if (event.data.board == "scoreboard") {
+                var personalStats = JSON.parse(event.data.personalStats);
+
+                $('#boardtitle').text("GUNGAME SCOREBOARD")
+                $('#currentmap').text(event.data.currentMap)
+                $('#personalkills').html(personalStats['kills'])
+                $('#personaldeaths').text(personalStats['deaths'])
+                $('#personalkd').text(personalStats['kd'])
+                $('#scoreboardstats').show();
+            } else {
+                $('#boardtitle').text("GUNGAME LEADERBOARD")
+                $('#scoreboardstats').hide();
+            }
+            
             $('#players').empty()
 
             for (var i = 0; i < topPlayers.length; i++) {
@@ -41,10 +55,10 @@ window.addEventListener('message', (event) => {
                 `)
             }
 
-            $('#scoreboard').show();
+            $('#board').fadeIn(500);
             break;
-        case 'hideScoreboard':
-            $('#scoreboard').hide();
+        case 'hideBoard':
+            $('#board').fadeOut(500);
         default:
             break;
     }

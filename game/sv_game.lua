@@ -10,7 +10,7 @@ GlobalState[States.Global.RoundTimeLeft] = nil
 GunGame = {}
 GunGame.Players = {}
 
-local function leaveGunGame(src)
+function LeaveGunGame(src)
     if GunGame.Players[src] then
         GunGame.Players[src] = nil
     end
@@ -36,17 +36,17 @@ local function finishGame(winnerId)
     local top20PlayerStats = Server.GetCurrentTop20PlayerStats()
 
     for src, player in pairs(GunGame.Players) do
-        TriggerClientEvent("cl_game:showScoreboard", src, top20PlayerStats)
+        TriggerClientEvent("cl_game:showBoard", src, top20PlayerStats, Boards.Scoreboard, Server.GetStats(src))
     end
 
     Wait(10000)
 
     for src, player in pairs(GunGame.Players) do
-        TriggerClientEvent("cl_game:hideScoreboard", src)
+        TriggerClientEvent("cl_game:hideBoard", src)
     end
 
     for src, player in pairs(GunGame.Players) do
-        leaveGunGame(src)
+        LeaveGunGame(src)
     end
     
     GlobalState[States.Global.GameActive] = false
@@ -89,7 +89,7 @@ end)
 RegisterNetEvent("sv_game:leaveGunGame", function ()
     local src = source
 
-    leaveGunGame(src)
+    LeaveGunGame(src)
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)

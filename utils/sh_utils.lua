@@ -2,6 +2,11 @@
 BY Rejox#7975 © RX
 --]]
 
+Boards = {
+    Scoreboard = "scoreboard",
+    Leaderboard = "leaderboard"
+}
+
 function GetIsGameActive()
     return GlobalState[States.Global.GameActive]
 end

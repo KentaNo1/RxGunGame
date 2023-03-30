@@ -22,3 +22,21 @@ RegisterCommand(Config.ResetLeaderboardCommand, function(source, args, rawComman
         end
     end
 end, false)
+
+RegisterCommand(Config.LeaveCommand, function(source, args, rawCommand)
+    local src = source
+
+    if Server.GetInGame(src) then
+       LeaveGunGame(src) 
+    else
+        Server.Notify(src, "You are not in a Gun Game!")
+    end
+end, false)
+
+RegisterCommand(Config.LeaderboardCommand, function(source, args, rawCommand)
+    local src = source
+
+    local top20PlayerStats = Database.GetTop20PlayerStats()
+
+    TriggerClientEvent("cl_game:showBoard", src, top20PlayerStats, Boards.Leaderboard)
+end, false)

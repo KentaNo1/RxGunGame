@@ -144,17 +144,29 @@ AddEventHandler('gameEventTriggered', function(event, data)
     end
 end)
 
-RegisterNetEvent("cl_game:showScoreboard", function(players)
-    SendNUIMessage({
-        action = "showScoreboard",
-        topPlayers = json.encode(players)
-    })
+RegisterNetEvent("cl_game:showBoard", function(players, type, playerStats)
+    if type == Boards.Scoreboard then
+        SendNUIMessage({
+            action = "showBoard",
+            topPlayers = json.encode(players),
+            board = type,
+            personalStats = json.encode(playerStats),
+            currentMap = GetCurrentMap().Label
+        })
+    elseif type == Boards.Leaderboard then
+        SendNUIMessage({
+            action = "showBoard",
+            topPlayers = json.encode(players),
+            board = type
+        })
+    end
+
     SetNuiFocus(true, true)
 end)
 
-RegisterNetEvent("cl_game:hideScoreboard", function()
+RegisterNetEvent("cl_game:hideBoard", function()
     SendNUIMessage({
-        action = "hideScoreboard"
+        action = "hideBoard"
     })
     SetNuiFocus(false, false)
 end)

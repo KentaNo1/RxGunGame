@@ -8,9 +8,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     </head>
     <body class="flex justify-center items-center w-screen h-screen">
-        <div id="scoreboard" class="hidden w-4/6 h-5/6">
+        <div id="board" class="hidden w-4/6 h-5/6">
             <div class="flex-col justify-center items-center bg-gray-900 bg-opacity-75 py-4 rounded-lg text-center drop-shadow-2xl skew-y-3">
-                <h2 class="text-3xl font-bold text-rose-700 mb-2 uppercase">GunGame Scoreboard</h2>
+                <h2 id="boardtitle" class="text-3xl font-bold text-rose-700 mb-2 uppercase"></h2>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-400">
                         <thead class="text-xs uppercase text-gray-400">
@@ -36,19 +36,21 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="mt-2 text-xl font-bold text-rose-700 uppercase">Cayo Perico</p>
-                <div class="flex justify-center items-center">
-                    <div class="flex flex-col justify-center items-center">
-                        <p class="text-rose-500 font-bold uppercase">Kills</p>
-                        <p class="text-xl font-medium text-white">10</p>
-                    </div>
-                    <div class="flex flex-col justify-center items-center mx-4">
-                        <p class="text-rose-500 font-bold uppercase">Deaths</p>
-                        <p class="text-xl font-medium text-white">5</p>
-                    </div>
-                    <div class="flex flex-col justify-center items-center">
-                        <p class="text-rose-500 font-bold uppercase">K/D Ratio</p>
-                        <p class="text-xl font-medium text-white">2.0</p>
+                <div id="scoreboardstats" class="hidden">
+                    <p id="currentmap" class="mt-2 text-xl font-bold text-rose-700 uppercase"></p>
+                    <div class="flex justify-center items-center">
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-rose-500 font-bold uppercase">Kills</p>
+                            <p id="personalkills" class="text-xl font-medium text-white"></p>
+                        </div>
+                        <div class="flex flex-col justify-center items-center mx-4">
+                            <p class="text-rose-500 font-bold uppercase">Deaths</p>
+                            <p id="personaldeaths" class="text-xl font-medium text-white"></p>
+                        </div>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-rose-500 font-bold uppercase">K/D Ratio</p>
+                            <p id="personalkd"class="text-xl font-medium text-white"></p>
+                        </div>
                     </div>
                 </div>
             </div>
