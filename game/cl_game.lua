@@ -4,10 +4,6 @@ BY Rejox#7975 © RX
 
 local isDead = false
 
-Citizen.CreateThread(function()
-    SetNuiFocus(true, true)
-end)
-
 local function revivePlayer()
     local playerPed = PlayerPedId()
 
@@ -146,6 +142,21 @@ AddEventHandler('gameEventTriggered', function(event, data)
             end
         end
     end
+end)
+
+RegisterNetEvent("cl_game:showScoreboard", function(players)
+    SendNUIMessage({
+        action = "showScoreboard",
+        topPlayers = json.encode(players)
+    })
+    SetNuiFocus(true, true)
+end)
+
+RegisterNetEvent("cl_game:hideScoreboard", function()
+    SendNUIMessage({
+        action = "hideScoreboard"
+    })
+    SetNuiFocus(false, false)
 end)
 
 Citizen.CreateThread(function()

@@ -63,6 +63,29 @@ function Server.ResetPlayerStates(src)
     Server.SetDeaths(src, 0)
 end
 
+function Server.GetCurrentTop20PlayerStats()
+    local top20PlayerStats = {}
+    
+    for k, v in pairs(GunGame.Players) do
+        top20PlayerStats[#top20PlayerStats+1] = {
+            name = GetPlayerName(k),
+            kills = Server.GetKills(k),
+            deaths = Server.GetDeaths(k),
+            kd = Server.GetKDRatio(k),
+        }
+    end
+
+    table.sort(top20PlayerStats, function(a, b)
+        return a.kills > b.kills
+    end)
+
+    for i = 21, #top20PlayerStats do
+        top20PlayerStats[i] = nil
+    end
+
+    return top20PlayerStats
+end
+
 Database = {}
 
 function Database.UpdatePlayerStats(src)

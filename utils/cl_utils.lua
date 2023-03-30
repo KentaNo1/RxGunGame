@@ -13,7 +13,6 @@ function DrawScreenText(text, x, y, scale, font, center, outline, rectangle)
     AddTextComponentString(text)
     DrawText(x, y)
     if rectangle then
-        print(json.encode(rectangle))
         DrawRect(rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0, 0, 0, 100)
     end
 end
