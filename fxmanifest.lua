@@ -20,10 +20,12 @@ client_scripts {
     'game/cl_game.lua',
     'lobby/cl_lobby.lua',
     'zones/cl_zones.lua',
+    'events/cl_events.lua',
 }
 server_scripts {
     'utils/sv_utils.lua',
     'game/sv_game.lua',
+    'events/sv_events.lua',
 }
 
 dependencies {
