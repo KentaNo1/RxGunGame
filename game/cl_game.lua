@@ -4,6 +4,10 @@ BY Rejox#7975 © RX
 
 local isDead = false
 
+Citizen.CreateThread(function()
+    SetNuiFocus(true, true)
+end)
+
 local function revivePlayer()
     local playerPed = PlayerPedId()
 
