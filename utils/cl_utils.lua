@@ -4,7 +4,7 @@ BY Rejox#7975 © RX
 
 Client = {}
 
-function DrawScreenText(text, x, y, scale, font, center, outline)
+function DrawScreenText(text, x, y, scale, font, center, outline, rectangle)
     if center then SetTextCentre(true) end
     if font then SetTextFont(font) else SetTextFont(4) end
     SetTextScale(scale, scale)
@@ -12,6 +12,10 @@ function DrawScreenText(text, x, y, scale, font, center, outline)
     SetTextEntry("STRING")
     AddTextComponentString(text)
     DrawText(x, y)
+    if rectangle then
+        print(json.encode(rectangle))
+        DrawRect(rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0, 0, 0, 100)
+    end
 end
 
 function Draw3DText(x, y, z, text)
@@ -98,7 +102,7 @@ function Client.GetKDRatio()
         return kills
     end
 
-    return kills / deaths
+    return math.floor(kills / deaths * 100) / 100
 end
 
 function Client.GetCurrentLevel()

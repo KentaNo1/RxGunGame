@@ -54,7 +54,7 @@ function Server.GetKDRatio(src)
         return kills
     end
 
-    return kills / deaths
+    return math.floor(kills / deaths * 100) / 100
 end
 
 function Server.ResetPlayerStates(src)

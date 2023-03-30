@@ -109,7 +109,8 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             local level = Client.GetCurrentLevel()
             local kd = Client.GetKDRatio()
 
-            DrawScreenText("~s~Kills: ~g~" .. kills .. " ~s~Deaths: ~r~" .. deaths .. " ~s~Level: ~y~" .. level .. " ~s~K/D: ~b~" .. kd, 0.5, 0.8, 0.7, 4, true, true)
+            local rectangle = { x = 0.0, y = 0.447, w = 0.15, h = 0.14 }
+            DrawScreenText("~s~Kills: ~r~" .. kills .. "\n~s~Deaths: ~r~" .. deaths .. "\n~s~Level: ~r~" .. level .. "\n~s~K/D: ~r~" .. kd, 0.01, 0.40, 0.4, 7, false, false, rectangle)
         end
     end)
 end)
