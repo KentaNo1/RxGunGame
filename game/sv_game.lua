@@ -26,7 +26,13 @@ local function leaveGunGame(src)
     Server.ResetPlayerStates(src)
 end 
 
-local function finishGame()
+local function finishGame(winnerId)
+    if not winnerId then
+        TriggerClientEvent("chat:addMessage", -1, { args = { "^1GunGame", "Nobody won the game!" } })
+    else
+        TriggerClientEvent("chat:addMessage", -1, { args = { "^1GunGame", GetPlayerName(winnerId) .. " won the game!" } })
+    end
+
     for src, player in pairs(GunGame.Players) do
         leaveGunGame(src)
     end
@@ -80,8 +86,19 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
 
     local currentKillerLevel = Server.GetCurrentLevel(killerId)
 
+    if currentKillerLevel == #Config.Levels then
+        finishGame(killerId)
+        return
+    end
+
     if currentKillerLevel < #Config.Levels then
         Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
+    end
+
+    local currentVictimLevel = Server.GetCurrentLevel(victimId)
+
+    if currentVictimLevel > 1 then
+        Server.SetCurrentLevel(victimId, currentVictimLevel - 1)
     end
 end)
 

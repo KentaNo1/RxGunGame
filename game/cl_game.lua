@@ -59,13 +59,13 @@ local function onDeath(victimPed, killerPed)
     local respawnTimer = GetCurrentMap().RespawnTime
 
     CreateThread(function()
-        while respawnTimer > 0 do
+        while respawnTimer > 0 and Client.GetInGame() do
             Wait(0)
             DrawScreenText("~s~Respawning in ~r~" .. respawnTimer .. " ~s~seconds")
         end
     end)
 
-    while respawnTimer > 0 do
+    while respawnTimer > 0 and Client.GetInGame() do
         Wait(1000)
         respawnTimer = respawnTimer - 1
     end
@@ -102,11 +102,6 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
 
             if GetAmmoInPedWeapon(playerPed, currentWeapon) == 0 then
                 SetPedAmmo(playerPed, currentWeapon, 9999)
-            end
-
-            local _, currentAmmoInClip = GetAmmoInClip(playerPed, currentWeapon)
-            if currentAmmoInClip == 0 then
-                TaskReloadWeapon(playerPed)
             end
         end
     end)

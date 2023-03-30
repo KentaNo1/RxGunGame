@@ -22,11 +22,11 @@ Config.JoinLobby = {
 Config.Levels = {
     [1] = {
         Label = "Level One",
-        Weapon = "WEAPON_SNSPISTOL",
+        Weapon = "WEAPON_PISTOL",
     },
     [2] = {
         Label = "Level Two",
-        Weapon = "WEAPON_VINTAGEPISTOL",
+        Weapon = "WEAPON_HEAVYPISTOL",
     },
     [3] = {
         Label = "Final Level",
@@ -37,10 +37,10 @@ Config.Levels = {
 Config.Maps = {
     ["Island"] = {
         Label = "Cayo Perico",
-        RespawnTime = 10, -- In Seconds
+        RespawnTime = 3, -- In Seconds
         RoundTime = 720, -- In Seconds
-        InvincibleOnSpawnTime = 5, -- In Seconds
-        MaximumOutOfZoneTime = 7, -- In Seconds
+        InvincibleOnSpawnTime = 3, -- In Seconds
+        MaximumOutOfZoneTime = 5, -- In Seconds
         MaximumPlayers = 16,
         SpawnPoints = {
             vector4(5121.3940, -5083.2788, 2.3973, 162.5292),
