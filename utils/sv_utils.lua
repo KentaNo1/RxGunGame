@@ -56,3 +56,17 @@ function Server.GetKDRatio(src)
 
     return kills / deaths
 end
+
+Database = {}
+
+function Database.UpdatePlayerStats(src)
+    local license = GetLicense(src)
+    local kills = Server.GetKills(src)
+    local deaths = Server.GetDeaths(src)
+
+    MySQL.Async.execute('INSERT INTO `gungame_stats` (`identifier`, `kills`, `deaths`) VALUES (@identifier, @kills, @deaths) ON DUPLICATE KEY UPDATE `kills` = `kills` + @kills, `deaths` = `deaths` + @deaths', {
+        ['@identifier'] = license,
+        ['@kills'] = kills,
+        ['@deaths'] = deaths
+    })
+end
