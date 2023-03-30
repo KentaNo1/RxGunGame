@@ -20,12 +20,14 @@ client_scripts {
     'game/cl_game.lua',
     'lobby/cl_lobby.lua',
     'zones/cl_zones.lua',
+    'commands/cl_commands.lua',
     'events/cl_events.lua',
 }
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'utils/sv_utils.lua',
     'game/sv_game.lua',
+    'commands/sv_commands.lua',
     'events/sv_events.lua',
 }
 

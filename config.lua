@@ -4,7 +4,8 @@ BY Rejox#7975 © RX
 
 Config = {}
 
-Config.LeaveServerInGameSpawnCoords = vector3(5086.4097, -5177.2280, 2.0630) -- If you leave the server while in game, you will be teleported to these coords at next join
+Config.ResetLeaderboardCommand = "gungame:resetleaderboard" -- Command to reset the leaderboard
+--Config.LeaveServerInGameSpawnCoords = vector3(5086.4097, -5177.2280, 2.0630) -- If you leave the server while in game, you will be teleported to these coords at next join
 
 Config.JoinLobby = {
     Blip = {
