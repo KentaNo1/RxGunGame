@@ -59,6 +59,8 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
 
     Server.SetInGame(src, false)
     Server.UpdatePlayersInGame(-1)
+
+    Database.UpdatePlayerStats(src)
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)

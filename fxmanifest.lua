@@ -23,12 +23,14 @@ client_scripts {
     'events/cl_events.lua',
 }
 server_scripts {
+    '@oxmysql/lib/MySQL.lua',
     'utils/sv_utils.lua',
     'game/sv_game.lua',
     'events/sv_events.lua',
 }
 
 dependencies {
+    'oxmysql',
     'PolyZone'
 }
 

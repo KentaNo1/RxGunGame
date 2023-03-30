@@ -4,16 +4,15 @@ BY Rejox#7975 © RX
 
 -- local licensesLeftInGame = {}
 
--- AddEventHandler('playerDropped', function()
---     local src = source
+AddEventHandler('playerDropped', function()
+    local src = source
 
---     if Player(src).state[States.Player.InGame] then
---         Server.UpdatePlayersInGame(-1)
---         licensesLeftInGame[#licensesLeftInGame+1] = GetLicense(src)
---     end
-
---     print(json.encode(licensesLeftInGame))
--- end)
+    if Player(src).state[States.Player.InGame] then
+        Server.UpdatePlayersInGame(-1)
+        Database.UpdatePlayerStats(src)
+        --licensesLeftInGame[#licensesLeftInGame+1] = GetLicense(src)
+    end
+end)
 
 -- AddEventHandler('playerSpawned', function()
 --     local src = source
