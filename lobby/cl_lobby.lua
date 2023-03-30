@@ -20,20 +20,20 @@ CreateThread(function()
         local playerCoords = GetEntityCoords(PlayerPedId())
         local distance = #(playerCoords - vector3(Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z))
         if distance <= 15.0 then
-            local gameActive = GlobalState[States.Global.GameActive]
+            local gameActive = GetIsGameActive()
             DrawMarker(1, Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z - 0.95, 0, 0, 0, 0, 0, 0, 3.0, 3.0, 0.5, 255, 0, 0, 100, 0, 0, 0, 0)
 
             if gameActive then
-                local playersInGame = GlobalState[States.Global.PlayersInGame]
-                local currentMap = GlobalState[States.Global.CurrentMap]
-                local maximumPlayers = Config.Maps[currentMap].MaximumPlayers
-                local roundTimeLeft = GlobalState[States.Global.RoundTimeLeft]
+                local playersInGame = GetPlayersInGame()
+                local roundTimeLeft = GetRoundTimeLeft()
+                local currentMap = GetCurrentMap()
+                local maximumPlayers = currentMap.MaximumPlayers
     
                 Draw3DText(Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z + 0.5, 
-                    "GunGame \n ~r~Map: ~HC_28~" .. currentMap .. " \n ~r~Players: ~HC_28~" .. playersInGame .. "/~HC_28~" .. maximumPlayers .. " \n ~r~Time left: ~HC_28~" .. SecondsToSecondsAndMinutes(roundTimeLeft)
+                    "GunGame \n ~r~Map: ~HC_28~" .. currentMap.Label .. " \n ~r~Players: ~HC_28~" .. playersInGame .. "/~HC_28~" .. maximumPlayers .. " \n ~r~Time left: ~HC_28~" .. SecondsToSecondsAndMinutes(roundTimeLeft)
                 )
                 if distance <= 1.7 then
-                    if not LocalPlayer.state[States.Player.InGame] then
+                    if not Client.GetInGame() then
                         if playersInGame >= maximumPlayers then
                             ShowHelpNotification("GunGame is full")
                         else

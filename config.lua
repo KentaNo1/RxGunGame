@@ -32,6 +32,7 @@ Config.Levels = {
     
     Config.Maps = {
         ["Island"] = {
+            Label = "Cayo Perico",
             RespawnTime = 10, -- In Seconds
             RoundTime = 720, -- In Seconds
             InvincibleOnSpawnTime = 5, -- In Seconds

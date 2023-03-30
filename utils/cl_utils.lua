@@ -2,6 +2,8 @@
 BY Rejox#7975 © RX
 --]]
 
+Client = {}
+
 function Draw3DText(x, y, z, text)
     local onScreen, _x, _y = World3dToScreen2d(x, y, z)
     local pX, pY, pZ = table.unpack(GetGameplayCamCoords())
@@ -50,3 +52,15 @@ function RequestWeapon(weapon)
 
     return weapon
 end
+
+function Client.GetInGame()
+    return LocalPlayer.state[States.Player.InGame]
+end
+
+function Client.GetCurrentLevelWeapon()
+    local currentLevel = LocalPlayer.state[States.Player.CurrentLevel]
+    local weapon = RequestWeapon(Config.Levels[currentLevel].Weapon)
+
+    return weapon
+end
+

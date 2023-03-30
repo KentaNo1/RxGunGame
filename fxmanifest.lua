@@ -11,6 +11,7 @@ version '1.0.0'
 
 shared_script {
     'config.lua',
+    'utils/sh_utils.lua',
 }
 
 client_scripts {
@@ -21,6 +22,7 @@ client_scripts {
     'zones/cl_zones.lua',
 }
 server_scripts {
+    'utils/sv_utils.lua',
     'game/sv_game.lua',
 }
 

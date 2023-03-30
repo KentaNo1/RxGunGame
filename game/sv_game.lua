@@ -24,7 +24,7 @@ local function startGame(map)
     GlobalState[States.Global.GameActive] = true
 
     CreateThread(function()
-        while GlobalState[States.Global.GameActive] and GlobalState[States.Global.RoundTimeLeft] > 0 do
+        while GetIsGameActive() and GetRoundTimeLeft() > 0 do
             Wait(1000)
             GlobalState[States.Global.RoundTimeLeft] = GlobalState[States.Global.RoundTimeLeft] - 1
         end
@@ -36,15 +36,15 @@ end
 RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
     
-    Player(src).state:set(States.Player.CurrentLevel, 1, true)
+    Server.SetCurrentLevel(src, 1)
 
     TriggerClientEvent("cl_game:joinGunGame", src)
     Wait(300)
 
     SetPlayerRoutingBucket(src, Config.GunGameRoutingBucket)
 
-    Player(src).state:set(States.Player.InGame, true, true)
-    GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] + 1
+    Server.SetInGame(src, true)
+    Server.UpdatePlayersInGame(1)
 end)
 
 RegisterNetEvent("sv_game:leaveGunGame", function ()
@@ -55,17 +55,15 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
 
     SetPlayerRoutingBucket(src, Config.DefaultRoutingBucket)
 
-    Player(src).state:set(States.Player.InGame, false, true)
-    GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] - 1
+    Server.SetInGame(src, false)
+    Server.UpdatePlayersInGame(-1)
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
-    local src = source
-
-    local currentKillerLevel = Player(killerId).state[States.Player.CurrentLevel]
+    local currentKillerLevel = Server.GetCurrentLevel(killerId)
 
     if currentKillerLevel < #Config.Levels then
-        Player(killerId).state:set(States.Player.CurrentLevel, currentKillerLevel + 1, true)
+        Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
     end
 end)
 
@@ -73,7 +71,7 @@ AddEventHandler('playerDropped', function()
     local src = source
 
     if Player(src).state[States.Player.InGame] then
-        GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] - 1
+        Server.UpdatePlayersInGame(-1)
     end
 end)
 
@@ -81,7 +79,7 @@ CreateThread(function()
     while true do
         Wait(1000)
 
-        if not GlobalState[States.Global.GameActive] then
+        if not GetIsGameActive() then
             startGame("Island")
         end 
     end
