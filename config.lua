@@ -4,10 +4,24 @@ BY Rejox#7975 © RX
 
 Config = {}
 
-Config.LeaderboardCommand = "gungame:leaderboard" -- Command to show the leaderboard
-Config.LeaveCommand = "gungame:leave" -- Command to leave the game
-Config.ResetLeaderboardCommand = "gungame:resetleaderboard" -- Command to reset the leaderboard
---Config.LeaveServerInGameSpawnCoords = vector3(5086.4097, -5177.2280, 2.0630) -- If you leave the server while in game, you will be teleported to these coords at next join
+Config.Keybinds = {
+    OpenScoreboardInGame = 48, -- Z by default
+}
+
+Config.Commands = {
+    ShowLeaderboard = {
+        Label = "Show GunGame Leaderboard",
+        Command = "gungame:leaderboard",
+    },
+    LeaveGame = {
+        Label = "Leave GunGame",
+        Command = "gungame:leave",
+    },
+    ResetLeaderboard = {
+        Label = "Reset GunGame Leaderboard (Admins Only)",
+        Command = "gungame:resetleaderboard",
+    },
+}
 
 Config.JoinLobby = {
     Blip = {

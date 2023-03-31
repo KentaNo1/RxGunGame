@@ -2,7 +2,7 @@
 BY Rejox#7975 © RX
 --]]
 
-RegisterCommand(Config.ResetLeaderboardCommand, function(source, args, rawCommand)
+RegisterCommand(Config.Commands.ResetLeaderboard.Command, function(source, args, rawCommand)
     local src = source
 
     if src == 0 then
@@ -23,7 +23,7 @@ RegisterCommand(Config.ResetLeaderboardCommand, function(source, args, rawComman
     end
 end, false)
 
-RegisterCommand(Config.LeaveCommand, function(source, args, rawCommand)
+RegisterCommand(Config.Commands.LeaveGame.Command, function(source, args, rawCommand)
     local src = source
 
     if Server.GetInGame(src) then
@@ -33,7 +33,7 @@ RegisterCommand(Config.LeaveCommand, function(source, args, rawCommand)
     end
 end, false)
 
-RegisterCommand(Config.LeaderboardCommand, function(source, args, rawCommand)
+RegisterCommand(Config.Commands.ShowLeaderboard.Command, function(source, args, rawCommand)
     local src = source
 
     ShowLeaderBoard(src)

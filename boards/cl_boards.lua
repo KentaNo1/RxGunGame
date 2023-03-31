@@ -16,7 +16,7 @@ function InitializeScoreboard()
         while Client.GetInGame() do
             Wait(0)
 
-            if IsControlPressed(0, 48) then
+            if IsControlPressed(0, Config.Keybinds.OpenScoreboardInGame) then
                 if not isScoreboardOpen then
                     TriggerServerEvent("sv_boards:showBoard", Boards.Scoreboard, false)
                     isScoreboardOpen = true

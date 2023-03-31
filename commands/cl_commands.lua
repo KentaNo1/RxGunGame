@@ -3,9 +3,9 @@ BY Rejox#7975 © RX
 --]]
 
 TriggerEvent('chat:addSuggestions', {
-    { name = "/" .. Config.LeaveCommand, help = "Leave GunGame" },
-    { name = "/" .. Config.ResetLeaderboardCommand, help = "Reset GunGame Leaderboard (Admin)" },
-    { name = "/" .. Config.LeaderboardCommand, help = "Show GunGame Leaderboard" },
+    { name = "/" .. Config.Commands.LeaveGame.Command, help = Config.Commands.LeaveGame.Label },
+    { name = "/" .. Config.Commands.ShowLeaderboard.Command, help = Config.Commands.ShowLeaderboard.Label },
+    { name = "/" .. Config.Commands.ResetLeaderboard.Command, help = Config.Commands.ResetLeaderboard.Label },
 })
 
 -- DEV COMMANDS -- 
