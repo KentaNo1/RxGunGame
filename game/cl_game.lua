@@ -111,7 +111,7 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             local nextLevel = Config.Levels[stats.level + 1]
             local nextWeapon = nextLevel and nextLevel.WeaponLabel or "None"
 
-            local rectangle = { x = 0.0, y = 0.46, w = 0.13, h = 0.25 }
+            local rectangle = { x = 0.0, y = 0.46, w = 0.138, h = 0.25 }
             DrawScreenText("~s~Kills: ~r~" .. stats.kills .. "\n~s~Deaths: ~r~" .. stats.deaths .. "\n~s~Level: ~r~" .. currentLevel.Label .. "\n~s~K/D: ~r~" .. stats.kd, 0.01, 0.35, 0.4, 4, false, false, rectangle)
             DrawScreenText("\n~s~Current \n~r~" .. currentLevel.WeaponLabel .. "\n~s~Next \n~r~" .. nextWeapon, 0.01, 0.45, 0.4, 4, false, false, rectangle2)
         end

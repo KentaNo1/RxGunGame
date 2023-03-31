@@ -42,18 +42,68 @@ Config.JoinLobby = {
 Config.Levels = {
     [1] = {
         Label = "One",
-        Weapon = "WEAPON_PISTOL",
-        WeaponLabel = "Pistol",
+        Weapon = "WEAPON_SNSPISTOL",
+        WeaponLabel = "SNS Pistol",
     },
     [2] = {
         Label = "Two",
+        Weapon = "WEAPON_VINTAGEPISTOL",
+        WeaponLabel = "Vintage Pistol",
+    },
+    [3] = {
+        Label = "Three",
+        Weapon = "WEAPON_PISTOL_MK2",
+        WeaponLabel = "Pistol Mk II",
+    },
+    [4] = {
+        Label = "Four",
         Weapon = "WEAPON_HEAVYPISTOL",
         WeaponLabel = "Heavy Pistol",
     },
-    [3] = {
+    [5] = {
+        Label = "Five",
+        Weapon = "WEAPON_PUMPSHOTGUN",
+        WeaponLabel = "Pump Shotgun",
+    },
+    [6] = {
+        Label = "Six",
+        Weapon = "WEAPON_SMG",
+        WeaponLabel = "SMG",
+    },
+    [7] = {
+        Label = "Seven",
+        Weapon = "WEAPON_DBSHOTGUN",
+        WeaponLabel = "Double Barrel",
+    },
+    [8] = {
+        Label = "Eight",
+        Weapon = "WEAPON_COMPACTRIFLE",
+        WeaponLabel = "Compact Rifle",
+    },
+    [9] = {
+        Label = "Nine",
+        Weapon = "WEAPON_ASSAULTRIFLE",
+        WeaponLabel = "Assault Rifle",
+    },
+    [10] = {
+        Label = "Ten",
+        Weapon = "WEAPON_SNIPERRIFLE",
+        WeaponLabel = "Sniper Rifle",
+    },
+    [11] = {
+        Label = "Eleven",
+        Weapon = "WEAPON_CARBINERIFLE",
+        WeaponLabel = "Carbine Rifle",
+    },
+    [12] = {
+        Label = "Twelve",
+        Weapon = "WEAPON_REVOLVER",
+        WeaponLabel = "Heavy Revolver",
+    },
+    [13] = {
         Label = "Final",
-        Weapon = "WEAPON_KNIFE",
-        WeaponLabel = "Knife",
+        Weapon = "WEAPON_MACHETE",
+        WeaponLabel = "Machete",
     }
 }
     

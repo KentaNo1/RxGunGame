@@ -16,29 +16,29 @@ if Config.JoinLobby.Blip.Active then
     EndTextCommandSetBlipName(lobbyBlip)
 end
 
-if Config.JoinLobby.NPC.Active then
-    if not joinNPC or not DoesEntityExist(joinNPC) then
-        local joinNPC = Config.JoinLobby.NPC
-        RequestModel(joinNPC.Model)
-        while not HasModelLoaded(joinNPC.Model) do
-            Wait(0)
-        end
-
-        joinNPC = CreatePed(4, joinNPC.Model, vector4(joinNPC.Coords.x, joinNPC.Coords.y, joinNPC.Coords.z - 1.0, joinNPC.Coords.w), false, false)
-        SetEntityInvincible(joinNPC, true)
-        SetEntityCanBeDamaged(joinNPC, false)
-        SetBlockingOfNonTemporaryEvents(joinNPC, true)
-        SetEntityAsMissionEntity(joinNPC, true, true)
-        FreezeEntityPosition(joinNPC, true)
-        PlaceObjectOnGroundProperly(joinNPC)
-        SetPedCanBeTargetted(joinNPC, false)
-        GiveWeaponToPed(joinNPC, RequestWeapon("WEAPON_ASSAULTRIFLE"), 999, false, false)
-        SetCurrentPedWeapon(joinNPC, "WEAPON_ASSAULTRIFLE", true)
-        SetPedDropsWeaponsWhenDead(joinNPC, false)
-    end
-end
-
 CreateThread(function()
+    if Config.JoinLobby.NPC.Active then
+        if not joinNPC or not DoesEntityExist(joinNPC) then
+            local joinNPC = Config.JoinLobby.NPC
+            RequestModel(joinNPC.Model)
+            while not HasModelLoaded(joinNPC.Model) do
+                Wait(0)
+            end
+    
+            joinNPC = CreatePed(4, joinNPC.Model, vector4(joinNPC.Coords.x, joinNPC.Coords.y, joinNPC.Coords.z - 1.0, joinNPC.Coords.w), false, false)
+            SetEntityInvincible(joinNPC, true)
+            SetEntityCanBeDamaged(joinNPC, false)
+            SetBlockingOfNonTemporaryEvents(joinNPC, true)
+            SetEntityAsMissionEntity(joinNPC, true, true)
+            FreezeEntityPosition(joinNPC, true)
+            PlaceObjectOnGroundProperly(joinNPC)
+            SetPedCanBeTargetted(joinNPC, false)
+            GiveWeaponToPed(joinNPC, RequestWeapon("WEAPON_ASSAULTRIFLE"), 999, false, false)
+            SetCurrentPedWeapon(joinNPC, "WEAPON_ASSAULTRIFLE", true)
+            SetPedDropsWeaponsWhenDead(joinNPC, false)
+        end
+    end
+
     while true do
         Wait(0)
         local playerCoords = GetEntityCoords(PlayerPedId())

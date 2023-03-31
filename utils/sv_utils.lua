@@ -19,6 +19,9 @@ function Server.GetCurrentLevel(src)
 end
 
 function Server.UpdatePlayersInGame(count)
+    if GlobalState[States.Global.PlayersInGame] == 0 and count < 0 then
+        return
+    end
     GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] + count
 end
 
