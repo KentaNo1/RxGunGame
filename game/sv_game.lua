@@ -96,20 +96,23 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
-    Server.SetKills(killerId, Server.GetKills(killerId) + 1)
+    if killerId and killerId ~= 0 then
+        Server.SetKills(killerId, Server.GetKills(killerId) + 1) 
+        
+        local currentKillerLevel = Server.GetCurrentLevel(killerId)
+
+        if currentKillerLevel == #Config.Levels then
+            finishGame(killerId)
+            return
+        end
+
+        if currentKillerLevel < #Config.Levels then
+            Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
+            Server.Notify(killerId, string.format("You are now level %s!", currentKillerLevel + 1))
+        end
+    end
+
     Server.SetDeaths(victimId, Server.GetDeaths(victimId) + 1)
-
-    local currentKillerLevel = Server.GetCurrentLevel(killerId)
-
-    if currentKillerLevel == #Config.Levels then
-        finishGame(killerId)
-        return
-    end
-
-    if currentKillerLevel < #Config.Levels then
-        Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
-        Server.Notify(killerId, string.format("You are now level %s!", currentKillerLevel + 1))
-    end
 
     local currentVictimLevel = Server.GetCurrentLevel(victimId)
 

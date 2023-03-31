@@ -15,7 +15,7 @@ end)
 AddEventHandler('gameEventTriggered', function(event, data)
     if event == "CEventNetworkEntityDamage" then
         local victim, attacker, victimDied, weapon = data[1], data[2], data[4], data[7]
-        if not IsEntityAPed(victim) or not IsEntityAPed(attacker) then return end
+        if not IsEntityAPed(victim) then return end
         if victimDied and NetworkGetPlayerIndexFromPed(victim) == PlayerId() and IsEntityDead(PlayerPedId()) then
             if Client.GetInGame() then
                 OnDeath(victim, attacker)
