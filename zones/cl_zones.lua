@@ -52,7 +52,7 @@ function InitializeZone()
     
                 if Client.GetInGame() and Client.GetOutsideZone() then
                     TriggerServerEvent("sv_game:leaveGunGame")
-                    Wait(100)
+                    Wait(300)
                     StopScreenEffect("Rampage")
                 end
             end)
