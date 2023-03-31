@@ -10,6 +10,8 @@ GlobalState[States.Global.RoundTimeLeft] = nil
 GunGame = {}
 GunGame.Players = {}
 
+local finishing = false
+
 function LeaveGunGame(src)
     if GunGame.Players[src] then
         GunGame.Players[src] = nil
@@ -27,6 +29,9 @@ function LeaveGunGame(src)
 end 
 
 local function finishGame(winnerId)
+    finishing = true
+    GlobalState[States.Global.GameActive] = false
+
     if not winnerId then
         Server.Notify(-1, "Nobody won the game!")
     else
@@ -47,7 +52,7 @@ local function finishGame(winnerId)
         LeaveGunGame(src)
     end
     
-    GlobalState[States.Global.GameActive] = false
+    finishing = false
 end
 
 local function startGame(map)
@@ -118,7 +123,7 @@ CreateThread(function()
     while true do
         Wait(1000)
 
-        if not GetIsGameActive() then
+        if not finishing and not GetIsGameActive() then
             startGame("Island")
         end 
     end

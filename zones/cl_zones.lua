@@ -50,5 +50,6 @@ end
 function DeleteZone()
     if zone then
         zone:destroy()
+        zone = nil
     end
 end
