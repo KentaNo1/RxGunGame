@@ -127,7 +127,8 @@ CreateThread(function()
         Wait(1000)
 
         if not finishing and not GetIsGameActive() then
-            startGame("Island")
+            local randomMap = math.random(1, #Config.Maps)
+            startGame(randomMap)
         end 
     end
 end)

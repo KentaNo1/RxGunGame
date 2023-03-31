@@ -108,7 +108,7 @@ Config.Levels = {
 }
     
 Config.Maps = {
-    ["Island"] = {
+    [1] = {
         Label = "Cayo Perico",
         RespawnTime = 3, -- In Seconds
         RoundTime = 720, -- In Seconds
