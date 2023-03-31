@@ -13,7 +13,7 @@ function DrawScreenText(text, x, y, scale, font, center, outline, rectangle)
     AddTextComponentString(text)
     DrawText(x, y)
     if rectangle then
-        DrawRect(rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0, 0, 0, 100)
+        DrawRect(rectangle.x, rectangle.y, rectangle.w, rectangle.h, 0, 0, 0, 150)
     end
 end
 
@@ -70,8 +70,12 @@ function Client.GetInGame()
     return LocalPlayer.state[States.Player.InGame]
 end
 
+function Client.GetCurrentLevel()
+    return LocalPlayer.state[States.Player.CurrentLevel] ~= nil and LocalPlayer.state[States.Player.CurrentLevel] or 1
+end
+
 function Client.GetCurrentLevelWeapon()
-    local currentLevel = LocalPlayer.state[States.Player.CurrentLevel]
+    local currentLevel = Client.GetCurrentLevel()
     local weapon = RequestWeapon(Config.Levels[currentLevel].Weapon)
 
     return weapon
@@ -91,10 +95,6 @@ end
 
 function Client.GetDeaths()
     return LocalPlayer.state[States.Player.Deaths] ~= nil and LocalPlayer.state[States.Player.Deaths] or 0
-end
-
-function Client.GetCurrentLevel()
-    return LocalPlayer.state[States.Player.CurrentLevel] ~= nil and LocalPlayer.state[States.Player.CurrentLevel] or 0
 end
 
 function Client.GetStats()

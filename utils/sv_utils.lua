@@ -15,7 +15,7 @@ function GetLicense(src)
 end
 
 function Server.GetCurrentLevel(src)
-    return Player(src).state[States.Player.CurrentLevel] ~= nil and Player(src).state[States.Player.CurrentLevel] or 0
+    return Player(src).state[States.Player.CurrentLevel] ~= nil and Player(src).state[States.Player.CurrentLevel] or 1
 end
 
 function Server.UpdatePlayersInGame(count)

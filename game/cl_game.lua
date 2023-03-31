@@ -105,9 +105,13 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             end
             
             local stats = Client.GetStats()
+            local currentLevel = Config.Levels[stats.level]
+            local nextLevel = Config.Levels[stats.level + 1]
+            local nextWeapon = nextLevel and nextLevel.WeaponLabel or "None"
 
-            local rectangle = { x = 0.0, y = 0.447, w = 0.12, h = 0.14 }
-            DrawScreenText("~s~Kills: ~r~" .. stats.kills .. "\n~s~Deaths: ~r~" .. stats.deaths .. "\n~s~Level: ~r~" .. stats.level .. "\n~s~K/D: ~r~" .. stats.kd, 0.01, 0.40, 0.4, 4, false, false, rectangle)
+            local rectangle = { x = 0.0, y = 0.46, w = 0.13, h = 0.25 }
+            DrawScreenText("~s~Kills: ~r~" .. stats.kills .. "\n~s~Deaths: ~r~" .. stats.deaths .. "\n~s~Level: ~r~" .. currentLevel.Label .. "\n~s~K/D: ~r~" .. stats.kd, 0.01, 0.35, 0.4, 4, false, false, rectangle)
+            DrawScreenText("\n~s~Current \n~r~" .. currentLevel.WeaponLabel .. "\n~s~Next \n~r~" .. nextWeapon, 0.01, 0.45, 0.4, 4, false, false, rectangle2)
         end
     end)
 
@@ -132,5 +136,5 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
 end)
 
 Citizen.CreateThread(function()
-    print("^2Successfully loaded ^5GunGame_RX ^2by ^5Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
+    print("^2Successfully loaded ^5" .. GetCurrentResourceName() " ^2by ^5Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
 end)

@@ -36,16 +36,19 @@ Config.JoinLobby = {
 
 Config.Levels = {
     [1] = {
-        Label = "Level One",
+        Label = "One",
         Weapon = "WEAPON_PISTOL",
+        WeaponLabel = "Pistol",
     },
     [2] = {
-        Label = "Level Two",
+        Label = "Two",
         Weapon = "WEAPON_HEAVYPISTOL",
+        WeaponLabel = "Heavy Pistol",
     },
     [3] = {
-        Label = "Final Level",
+        Label = "Final",
         Weapon = "WEAPON_KNIFE",
+        WeaponLabel = "Knife",
     }
 }
     

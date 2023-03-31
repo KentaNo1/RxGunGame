@@ -125,5 +125,5 @@ CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    print("^2Successfully loaded ^9GunGame_RX ^2by ^9Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
+    print("^2Successfully loaded ^9" .. GetCurrentResourceName() .. " ^2by ^9Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
 end)
