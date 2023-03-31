@@ -47,7 +47,7 @@ local function spawnPlayer()
     DoScreenFadeIn(300)
 end
 
-local function onDeath(victimPed, killerPed)
+function OnDeath(victimPed, killerPed)
     local victimId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(victimPed))
     local killerId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(killerPed))
 
@@ -113,6 +113,8 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             DrawScreenText("~s~Kills: ~r~" .. kills .. "\n~s~Deaths: ~r~" .. deaths .. "\n~s~Level: ~r~" .. level .. "\n~s~K/D: ~r~" .. kd, 0.01, 0.40, 0.4, 4, false, false, rectangle)
         end
     end)
+
+    InitializeScoreboard()
 end)
 
 RegisterNetEvent("cl_game:leaveGunGame", function ()
@@ -130,45 +132,6 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
     RemoveAllPedWeapons(playerPed, true)
 
     DoScreenFadeIn(300)
-end)
-
-AddEventHandler('gameEventTriggered', function(event, data)
-    if event == "CEventNetworkEntityDamage" then
-        local victim, attacker, victimDied, weapon = data[1], data[2], data[4], data[7]
-        if not IsEntityAPed(victim) or not IsEntityAPed(attacker) then return end
-        if victimDied and NetworkGetPlayerIndexFromPed(victim) == PlayerId() and IsEntityDead(PlayerPedId()) then
-            if Client.GetInGame() then
-                onDeath(victim, attacker)
-            end
-        end
-    end
-end)
-
-RegisterNetEvent("cl_game:showBoard", function(players, type, playerStats)
-    if type == Boards.Scoreboard then
-        SendNUIMessage({
-            action = "showBoard",
-            topPlayers = json.encode(players),
-            board = type,
-            personalStats = json.encode(playerStats),
-            currentMap = GetCurrentMap().Label
-        })
-    elseif type == Boards.Leaderboard then
-        SendNUIMessage({
-            action = "showBoard",
-            topPlayers = json.encode(players),
-            board = type
-        })
-    end
-
-    SetNuiFocus(true, true)
-end)
-
-RegisterNetEvent("cl_game:hideBoard", function()
-    SendNUIMessage({
-        action = "hideBoard"
-    })
-    SetNuiFocus(false, false)
 end)
 
 Citizen.CreateThread(function()

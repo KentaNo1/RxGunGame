@@ -33,16 +33,14 @@ local function finishGame(winnerId)
         Server.Notify(-1, string.format("%s won the game!", GetPlayerName(winnerId)))
     end
 
-    local top20PlayerStats = Server.GetCurrentTop20PlayerStats()
-
     for src, player in pairs(GunGame.Players) do
-        TriggerClientEvent("cl_game:showBoard", src, top20PlayerStats, Boards.Scoreboard, Server.GetStats(src))
+        ShowScoreboard(src, true)
     end
 
     Wait(10000)
 
     for src, player in pairs(GunGame.Players) do
-        TriggerClientEvent("cl_game:hideBoard", src)
+        HideBoard(src)
     end
 
     for src, player in pairs(GunGame.Players) do

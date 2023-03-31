@@ -17,7 +17,7 @@ shared_script {
 client_scripts {
     '@PolyZone/client.lua',
     'utils/cl_utils.lua',
-    'configurable/cl_functions.lua',
+    'boards/cl_boards.lua',
     'game/cl_game.lua',
     'lobby/cl_lobby.lua',
     'zones/cl_zones.lua',
@@ -28,6 +28,7 @@ server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'utils/sv_utils.lua',
     'configurable/sv_functions.lua',
+    'boards/sv_boards.lua',
     'game/sv_game.lua',
     'commands/sv_commands.lua',
     'events/sv_events.lua',

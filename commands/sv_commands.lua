@@ -36,7 +36,5 @@ end, false)
 RegisterCommand(Config.LeaderboardCommand, function(source, args, rawCommand)
     local src = source
 
-    local top20PlayerStats = Database.GetTop20PlayerStats()
-
-    TriggerClientEvent("cl_game:showBoard", src, top20PlayerStats, Boards.Leaderboard)
+    ShowLeaderBoard(src)
 end, false)
