@@ -31,6 +31,11 @@ Config.JoinLobby = {
         Color = 1,
         Scale = 0.8,
     },
+    NPC = {
+        Active = true,
+        Model = "g_m_y_mexgoon_03",
+        Coords = vector4(5086.3765, -5177.2197, 2.0638, 88.4565)
+    },
     Coords = vector4(5086.4097, -5177.2280, 2.0630, 173.7285)
 }
 
@@ -56,7 +61,7 @@ Config.Maps = {
     ["Island"] = {
         Label = "Cayo Perico",
         RespawnTime = 3, -- In Seconds
-        RoundTime = 720, -- In Seconds
+        RoundTime = 10, -- In Seconds
         InvincibleOnSpawnTime = 3, -- In Seconds
         MaximumOutOfZoneTime = 5, -- In Seconds
         MaximumPlayers = 16,

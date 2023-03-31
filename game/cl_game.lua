@@ -136,5 +136,5 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
 end)
 
 Citizen.CreateThread(function()
-    print("^2Successfully loaded ^5" .. GetCurrentResourceName() " ^2by ^5Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
+    print("^2Successfully loaded ^5" .. GetCurrentResourceName() .. " ^2by ^5Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
 end)
