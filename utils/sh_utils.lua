@@ -29,3 +29,7 @@ end
 function GetRoundTimeLeft()
     return GlobalState[States.Global.RoundTimeLeft]
 end
+
+function GetKDRatio(kills, deaths)
+    return math.floor(kills / deaths * 100) / 100
+end

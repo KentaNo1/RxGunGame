@@ -103,14 +103,11 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             if GetAmmoInPedWeapon(playerPed, currentWeapon) == 0 then
                 SetPedAmmo(playerPed, currentWeapon, 9999)
             end
-
-            local kills = Client.GetKills()
-            local deaths = Client.GetDeaths()
-            local level = Client.GetCurrentLevel()
-            local kd = Client.GetKDRatio()
+            
+            local stats = Client.GetStats()
 
             local rectangle = { x = 0.0, y = 0.447, w = 0.12, h = 0.14 }
-            DrawScreenText("~s~Kills: ~r~" .. kills .. "\n~s~Deaths: ~r~" .. deaths .. "\n~s~Level: ~r~" .. level .. "\n~s~K/D: ~r~" .. kd, 0.01, 0.40, 0.4, 4, false, false, rectangle)
+            DrawScreenText("~s~Kills: ~r~" .. stats.kills .. "\n~s~Deaths: ~r~" .. stats.deaths .. "\n~s~Level: ~r~" .. stats.level .. "\n~s~K/D: ~r~" .. stats.kd, 0.01, 0.40, 0.4, 4, false, false, rectangle)
         end
     end)
 

@@ -15,7 +15,7 @@ function GetLicense(src)
 end
 
 function Server.GetCurrentLevel(src)
-    return Player(src).state[States.Player.CurrentLevel]
+    return Player(src).state[States.Player.CurrentLevel] ~= nil and Player(src).state[States.Player.CurrentLevel] or 0
 end
 
 function Server.UpdatePlayersInGame(count)
@@ -31,7 +31,7 @@ function Server.SetInGame(src, inGame)
 end
 
 function Server.GetKills(src)
-    return Player(src).state[States.Player.Kills]
+    return Player(src).state[States.Player.Kills] ~= nil and Player(src).state[States.Player.Kills] or 0
 end
 
 function Server.SetKills(src, kills)
@@ -39,7 +39,7 @@ function Server.SetKills(src, kills)
 end
 
 function Server.GetDeaths(src)
-    return Player(src).state[States.Player.Deaths]
+    return Player(src).state[States.Player.Deaths] ~= nil and Player(src).state[States.Player.Deaths] or 0
 end
 
 function Server.SetDeaths(src, deaths)
@@ -50,22 +50,15 @@ function Server.GetInGame(src)
     return Player(src).state[States.Player.InGame]
 end
 
-function Server.GetKDRatio(src)
+function Server.GetStats(src)
     local kills = Server.GetKills(src)
     local deaths = Server.GetDeaths(src)
+    local kd = GetKDRatio(kills, deaths)
 
-    if deaths == 0 then
-        return kills
-    end
-
-    return math.floor(kills / deaths * 100) / 100
-end
-
-function Server.GetStats(src)
     return {
-        kills = Server.GetKills(src),
-        deaths = Server.GetDeaths(src),
-        kd = Server.GetKDRatio(src),
+        kills = kills,
+        deaths = deaths,
+        kd = kd,
     }
 end
 
@@ -79,11 +72,13 @@ function Server.GetCurrentTop20PlayerStats()
     local top20PlayerStats = {}
     
     for k, v in pairs(GunGame.Players) do
+        local stats = Server.GetStats(k)
+
         top20PlayerStats[#top20PlayerStats+1] = {
             name = GetPlayerName(k),
-            kills = Server.GetKills(k),
-            deaths = Server.GetDeaths(k),
-            kd = Server.GetKDRatio(k),
+            kills = stats.kills,
+            deaths = stats.deaths,
+            kd = stats.kd,
         }
     end
 
@@ -102,13 +97,14 @@ Database = {}
 
 function Database.UpdatePlayerStats(src)
     local license = GetLicense(src)
-    local kills = Server.GetKills(src) ~= nil and Server.GetKills(src) or 0
-    local deaths = Server.GetDeaths(src) ~= nil and Server.GetDeaths(src) or 0
+    local playerName = GetPlayerName(src)
+    local stats = Server.GetStats(src)
 
-    MySQL.Async.execute('INSERT INTO `gungame_stats` (`identifier`, `kills`, `deaths`) VALUES (@identifier, @kills, @deaths) ON DUPLICATE KEY UPDATE `kills` = `kills` + @kills, `deaths` = `deaths` + @deaths', {
+    MySQL.Async.execute('INSERT INTO `gungame_stats` (`identifier`, `playername`, `kills`, `deaths`) VALUES (@identifier, @playername, @kills, @deaths) ON DUPLICATE KEY UPDATE `playername` = @playername, `kills` = `kills` + @kills, `deaths` = `deaths` + @deaths', {
         ['@identifier'] = license,
-        ['@kills'] = kills,
-        ['@deaths'] = deaths
+        ['@playername'] = playerName,
+        ['@kills'] = stats.kills,
+        ['@deaths'] = stats.deaths
     })
 end
 
@@ -119,10 +115,10 @@ function Database.GetTop20PlayerStats()
     if result then
         for k, v in pairs(result) do
             top20PlayerStats[#top20PlayerStats+1] = {
-                name = v.identifier,
+                name = v.playername,
                 kills = v.kills,
                 deaths = v.deaths,
-                kd = v.deaths == 0 and v.kills or math.floor(v.kills / v.deaths * 100) / 100
+                kd = GetKDRatio(v.kills, v.deaths),
             }
         end
     end

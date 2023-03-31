@@ -86,26 +86,29 @@ function Client.SetOutsideZone(outside)
 end
 
 function Client.GetKills()
-    return LocalPlayer.state[States.Player.Kills]
+    return LocalPlayer.state[States.Player.Kills] ~= nil and LocalPlayer.state[States.Player.Kills] or 0
 end
 
 function Client.GetDeaths()
-    return LocalPlayer.state[States.Player.Deaths]
-end
-
-function Client.GetKDRatio()
-    local kills = Client.GetKills()
-    local deaths = Client.GetDeaths()
-
-    if deaths == 0 then
-        return kills
-    end
-
-    return math.floor(kills / deaths * 100) / 100
+    return LocalPlayer.state[States.Player.Deaths] ~= nil and LocalPlayer.state[States.Player.Deaths] or 0
 end
 
 function Client.GetCurrentLevel()
-    return LocalPlayer.state[States.Player.CurrentLevel]
+    return LocalPlayer.state[States.Player.CurrentLevel] ~= nil and LocalPlayer.state[States.Player.CurrentLevel] or 0
+end
+
+function Client.GetStats()
+    local kills = Client.GetKills()
+    local deaths = Client.GetDeaths()
+    local level = Client.GetCurrentLevel()
+    local kd = GetKDRatio(kills, deaths)
+
+    return {
+        kills = kills,
+        deaths = deaths,
+        level = level,
+        kd = kd
+    }
 end
 
 
