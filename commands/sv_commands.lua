@@ -11,14 +11,10 @@ RegisterCommand(Config.Commands.ResetLeaderboard.Command, function(source, args,
     else
         if IsPlayerAceAllowed(src, 'gungame.admin') then
             MySQL.Async.execute("DELETE FROM gungame_stats", {}, function()
-                TriggerClientEvent('chat:addMessage', src, {
-                    args = {"^1GunGame: ^0Leaderboard has been reset!"}
-                })
+                Server.Notify(src, "Leaderboard has been reset!")
             end)
         else
-            TriggerClientEvent('chat:addMessage', src, {
-                args = {"^1GunGame: ^0You don't have permissions to use this command!"}
-            })
+            Server.Notify(src, "You do not have permission to do this!")
         end
     end
 end, false)
