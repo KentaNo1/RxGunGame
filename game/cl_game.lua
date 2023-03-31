@@ -65,14 +65,16 @@ function OnDeath(victimPed, killerPed)
         end
     end)
 
-    while respawnTimer > 0 and Client.GetInGame() do
-        Wait(1000)
-        respawnTimer = respawnTimer - 1
-    end
-
-    if Client.GetInGame() then
-        spawnPlayer()
-    end
+    CreateThread(function()
+        while respawnTimer > 0 and Client.GetInGame() do
+            Wait(1000)
+            respawnTimer = respawnTimer - 1
+        end
+    
+        if Client.GetInGame() and isDead then
+            spawnPlayer()
+        end
+    end)
 end
 
 RegisterNetEvent("cl_game:joinGunGame", function ()
