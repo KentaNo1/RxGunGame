@@ -18,7 +18,7 @@ AddEventHandler('gameEventTriggered', function(event, data)
         if not IsEntityAPed(victim) or not IsEntityAPed(attacker) then return end
         if victimDied and NetworkGetPlayerIndexFromPed(victim) == PlayerId() and IsEntityDead(PlayerPedId()) then
             if Client.GetInGame() then
-                onDeath(victim, attacker)
+                OnDeath(victim, attacker)
             end
         end
     end

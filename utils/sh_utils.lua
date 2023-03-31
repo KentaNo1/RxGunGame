@@ -31,5 +31,9 @@ function GetRoundTimeLeft()
 end
 
 function GetKDRatio(kills, deaths)
-    return math.floor(kills / deaths * 100) / 100
+    if deaths == 0 then
+        return string.format("%.2f", kills)
+    else
+        return string.format("%.2f", kills / deaths)
+    end
 end
