@@ -61,7 +61,7 @@ function OnDeath(victimPed, killerPed)
     CreateThread(function()
         while respawnTimer > 0 and Client.GetInGame() do
             Wait(0)
-            DrawScreenText("~s~Respawning in ~r~" .. respawnTimer .. " ~s~seconds", 0.5, 0.83, 0.7, 4, true, true)
+            DrawScreenText(string.format(Locales[Config.Locale].respawning, respawnTimer), 0.5, 0.83, 0.7, 4, true, true)
         end
     end)
 
@@ -112,8 +112,8 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             local nextWeapon = nextLevel and nextLevel.WeaponLabel or "None"
 
             local rectangle = { x = 0.0, y = 0.46, w = 0.138, h = 0.25 }
-            DrawScreenText("~s~Kills: ~r~" .. stats.kills .. "\n~s~Deaths: ~r~" .. stats.deaths .. "\n~s~Level: ~r~" .. currentLevel.Label .. "\n~s~K/D: ~r~" .. stats.kd, 0.01, 0.35, 0.4, 4, false, false, rectangle)
-            DrawScreenText("\n~s~Current \n~r~" .. currentLevel.WeaponLabel .. "\n~s~Next \n~r~" .. nextWeapon, 0.01, 0.45, 0.4, 4, false, false, rectangle2)
+            DrawScreenText("~s~" .. Locales[Config.Locale].kills ..": ~r~" .. stats.kills .. "\n~s~" .. Locales[Config.Locale].deaths ..": ~r~" .. stats.deaths .. "\n~s~" .. Locales[Config.Locale].level ..": ~r~" .. currentLevel.Label .. "\n~s~" .. Locales[Config.Locale].kd ..": ~r~" .. stats.kd, 0.01, 0.35, 0.4, 4, false, false, rectangle)
+            DrawScreenText("\n~s~" .. Locales[Config.Locale].current .." \n~r~" .. currentLevel.WeaponLabel .. "\n~s~" .. Locales[Config.Locale].next .." \n~r~" .. nextWeapon, 0.01, 0.45, 0.4, 4, false, false, rectangle2)
         end
     end)
 

@@ -40,7 +40,7 @@ function InitializeZone()
             CreateThread(function()
                 while maximumOutOfZoneTime > 0 and Client.GetInGame() and Client.GetOutsideZone() do
                     Wait(0)
-                    DrawScreenText("~s~Leaving GunGame in ~r~" .. maximumOutOfZoneTime .. " ~s~seconds", 0.5, 0.83, 0.7, 4, true, true)
+                    DrawScreenText(string.format(Locales[Config.Locale].leaving, maximumOutOfZoneTime), 0.5, 0.83, 0.7, 4, true, true)
                 end
             end)
         
