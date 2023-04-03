@@ -12,6 +12,7 @@ version '1.0.0'
 shared_script {
     'config.lua',
     'utils/sh_utils.lua',
+    'locales/*.lua'
 }
 
 client_scripts {

@@ -3,6 +3,10 @@ BY Rejox#7975 © RX
 --]]
 
 Config = {}
+Locales = {}
+
+Config.Locale = "en"
+Config.Prize = 1000
 
 Config.Keybinds = {
     OpenScoreboardInGame = 48, -- Z by default
@@ -110,6 +114,7 @@ Config.Levels = {
 Config.Maps = {
     [1] = {
         Label = "Cayo Perico",
+        Prize = 1000,
         RespawnTime = 3, -- In Seconds
         RoundTime = 720, -- In Seconds
         InvincibleOnSpawnTime = 3, -- In Seconds

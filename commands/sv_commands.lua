@@ -11,10 +11,10 @@ RegisterCommand(Config.Commands.ResetLeaderboard.Command, function(source, args,
     else
         if IsPlayerAceAllowed(src, 'gungame.admin') then
             MySQL.Async.execute("DELETE FROM gungame_stats", {}, function()
-                Server.Notify(src, "Leaderboard has been reset!")
+                Server.Notify(src, Locales[Config.Locale].leaderboard_reset)
             end)
         else
-            Server.Notify(src, "You do not have permission to do this!")
+            Server.Notify(src, Locales[Config.Locale].no_permission)
         end
     end
 end, false)
@@ -25,7 +25,7 @@ RegisterCommand(Config.Commands.LeaveGame.Command, function(source, args, rawCom
     if Server.GetInGame(src) then
        LeaveGunGame(src) 
     else
-        Server.Notify(src, "You are not in a Gun Game!")
+        Server.Notify(src, Locales[Config.Locale].not_ingame)
     end
 end, false)
 

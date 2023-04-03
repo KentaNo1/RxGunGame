@@ -33,9 +33,10 @@ local function finishGame(winnerId)
     GlobalState[States.Global.GameActive] = false
 
     if not winnerId then
-        Server.Notify(-1, "Nobody won the game!")
+        Server.Notify(src, Locales[Config.Locale].nobody_won)
     else
-        Server.Notify(-1, string.format("%s won the game!", GetPlayerName(winnerId)))
+        Server.GivePrizeWinner(winnerId)
+        Server.Notify(src, string.format(Locales[Config.Locale].won_game, GetPlayerName(winnerId)))
     end
 
     for src, player in pairs(GunGame.Players) do
@@ -108,7 +109,7 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
 
         if currentKillerLevel < #Config.Levels then
             Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
-            Server.Notify(killerId, string.format("You are now level %s!", currentKillerLevel + 1))
+            Server.Notify(killerId, string.format(Locales[Config.Locale].level_changed, currentKillerLevel + 1))
         end
     end
 
@@ -118,7 +119,7 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
 
     if currentVictimLevel > 1 then
         Server.SetCurrentLevel(victimId, currentVictimLevel - 1)
-        Server.Notify(victimId, string.format("You are now level %s!", currentVictimLevel - 1))
+        Server.Notify(victimId, string.format(Locales[Config.Locale].level_changed, currentVictimLevel - 1))
     end
 end)
 
