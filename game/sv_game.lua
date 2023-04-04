@@ -17,6 +17,10 @@ function LeaveGunGame(src)
         GunGame.Players[src] = nil
     end
 
+    if Config.Killfeed then
+        exports['killfeed']:RemovePlayerFromLobby(src, 'gungame')  
+    end
+
     TriggerClientEvent("cl_game:leaveGunGame", src)
     Wait(300)
 
@@ -74,9 +78,13 @@ end
 
 RegisterNetEvent("sv_game:joinGunGame", function ()
     local src = source
-    
+
     if not GunGame.Players[src] then
         GunGame.Players[src] = true
+    end
+
+    if Config.Killfeed then
+        exports['killfeed']:AddPlayerToLobby(src, 'gungame')  
     end
 
     Server.ResetPlayerStates(src)

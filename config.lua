@@ -7,6 +7,7 @@ Locales = {}
 
 Config.Locale = "en"
 Config.Prize = 1000
+Config.Killfeed = true -- Are u using killfeed as optional dependency?
 
 Config.Keybinds = {
     OpenScoreboardInGame = 48, -- Z by default
