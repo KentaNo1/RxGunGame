@@ -2,7 +2,7 @@
 BY Rejox#7975 © RX
 --]]
 
--- local licensesLeftInGame = {}
+local licensesLeftInGame = {}
 
 AddEventHandler('playerDropped', function()
     local src = source
@@ -10,7 +10,7 @@ AddEventHandler('playerDropped', function()
     if Player(src).state[States.Player.InGame] then
         Server.UpdatePlayersInGame(-1)
         Database.UpdatePlayerStats(src)
-        --licensesLeftInGame[#licensesLeftInGame+1] = GetLicense(src)
+        licensesLeftInGame[#licensesLeftInGame+1] = GetLicense(src)
     end
 end)
 

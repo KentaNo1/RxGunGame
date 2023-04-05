@@ -53,6 +53,8 @@ function OnDeath(victimPed, killerPed)
 
     TriggerServerEvent("sv_game:onDeath", victimId, killerId)
 
+    SetEntityHealth(killerPed, GetEntityMaxHealth(killerPed))
+
     StartScreenEffect("DeathFailOut", 0, false)
     isDead = true
 
