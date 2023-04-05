@@ -48,3 +48,9 @@ dependencies {
 }
 
 lua54 'yes'
+
+escrow_ignore {
+    'config.lua',
+    'configurable/*.lua',
+    'locales/*.lua'
+}

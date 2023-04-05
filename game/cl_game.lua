@@ -31,13 +31,15 @@ local function spawnPlayer()
 
     if currentWeapon ~= GetHashKey(levelWeapon) then
         if HasPedGotWeapon(playerPed, GetHashKey(levelWeapon), false) then
-            SetAmmoInClip(playerPed, GetHashKey(levelWeapon), 9999)
             SetCurrentPedWeapon(playerPed, GetHashKey(levelWeapon), true)
         else
             GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
-            SetAmmoInClip(playerPed, GetHashKey(levelWeapon), 9999)
         end
+
+        currentWeapon = GetHashKey(levelWeapon)
     end
+
+    SetAmmoInClip(playerPed, currentWeapon, 9999)
 
     revivePlayer()
     NetworkResurrectLocalPlayer(randomSpawnPoint, false, false)
