@@ -98,7 +98,7 @@ function Server.SetCurrentMap(map)
 end
 
 function Server.SetCurrentRoundTime(time)
-    GlobalState[States.Global.CurrentRoundTime] = time
+    GlobalState[States.Global.RoundTimeLeft] = time
 end
 
 function Server.SetPlayersInGame(count)

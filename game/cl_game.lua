@@ -89,6 +89,11 @@ function OnDeath(victimPed, killerPed)
     end)
 end
 
+RegisterNetEvent('cl_game:sendToNewGame', function ()
+    spawnPlayer()
+    InitializeZone()
+end)
+
 RegisterNetEvent("cl_game:joinGunGame", function ()
     spawnPlayer()
     InitializeZone()

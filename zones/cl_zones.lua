@@ -4,12 +4,19 @@ BY Rejox#7975 © RX
 
 local zone = nil
 
+function DeleteZone()
+    if zone then
+        zone:destroy()
+        zone = nil
+    end
+end
+
 function InitializeZone()
     if zone ~= nil then
-        return
-    else
-        zone = {}
+        DeleteZone()
     end
+    
+    zone = {}
 
     local currentMap = GetCurrentMap()
 
@@ -58,11 +65,4 @@ function InitializeZone()
             end)
         end
     end)
-end
-
-function DeleteZone()
-    if zone then
-        zone:destroy()
-        zone = nil
-    end
 end

@@ -32,33 +32,40 @@ function LeaveGunGame(src)
     Server.ResetPlayerStates(src)
 end 
 
+local function sendPlayerToNewGame(src)
+    Server.UpdatePlayersInGame(1)
+    TriggerClientEvent("cl_game:sendToNewGame", src)
+    Wait(300)
+    Server.ResetPlayerStates(src)
+end
+
 local function finishGame(winnerId)
-    if not finish then
+    if not finishing then
         finishing = true
-        GlobalState[States.Global.GameActive] = false
+        Server.SetGameActive(false)
     
         if not winnerId then
-            Server.Notify(src, Locales[Config.Locale].nobody_won)
+            Server.Notify(-1, Locales[Config.Locale].nobody_won)
         else
             Server.GivePrizeWinner(winnerId)
-            Server.Notify(src, string.format(Locales[Config.Locale].won_game, GetPlayerName(winnerId)))
+            Server.Notify(-1, string.format(Locales[Config.Locale].won_game, GetPlayerName(winnerId)))
         end
     
         for src, player in pairs(GunGame.Players) do
             ShowScoreboard(src, true)
         end
-    
+
+        finishing = false 
+
         Wait(10000)
     
         for src, player in pairs(GunGame.Players) do
+            sendPlayerToNewGame(src)
+        end
+
+        for src, player in pairs(GunGame.Players) do
             HideBoard(src)
         end
-    
-        for src, player in pairs(GunGame.Players) do
-            LeaveGunGame(src)
-        end
-        
-        finishing = false 
     end
 end
 
