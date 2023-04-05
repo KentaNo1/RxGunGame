@@ -11,7 +11,6 @@ GunGame = {}
 GunGame.Players = {}
 
 local finishing = false
-local currentWinnerId = nil
 
 function LeaveGunGame(src)
     if GunGame.Players[src] then
@@ -33,43 +32,44 @@ function LeaveGunGame(src)
     Server.ResetPlayerStates(src)
 end 
 
-local function finishGame()
-    finishing = true
-    GlobalState[States.Global.GameActive] = false
-
-    if not currentWinnerId then
-        Server.Notify(src, Locales[Config.Locale].nobody_won)
-    else
-        Server.GivePrizeWinner(currentWinnerId)
-        Server.Notify(src, string.format(Locales[Config.Locale].won_game, GetPlayerName(currentWinnerId)))
-    end
-
-    for src, player in pairs(GunGame.Players) do
-        ShowScoreboard(src, true)
-    end
-
-    Wait(10000)
-
-    for src, player in pairs(GunGame.Players) do
-        HideBoard(src)
-    end
-
-    for src, player in pairs(GunGame.Players) do
-        LeaveGunGame(src)
-    end
+local function finishGame(winnerId)
+    if not finish then
+        finishing = true
+        GlobalState[States.Global.GameActive] = false
     
-    finishing = false
+        if not winnerId then
+            Server.Notify(src, Locales[Config.Locale].nobody_won)
+        else
+            Server.GivePrizeWinner(winnerId)
+            Server.Notify(src, string.format(Locales[Config.Locale].won_game, GetPlayerName(winnerId)))
+        end
+    
+        for src, player in pairs(GunGame.Players) do
+            ShowScoreboard(src, true)
+        end
+    
+        Wait(10000)
+    
+        for src, player in pairs(GunGame.Players) do
+            HideBoard(src)
+        end
+    
+        for src, player in pairs(GunGame.Players) do
+            LeaveGunGame(src)
+        end
+        
+        finishing = false 
+    end
 end
 
 local function startGame(map)
-    currentWinnerId = nil
     Server.SetCurrentMap(map)
-    GlobalState[States.Global.PlayersInGame] = 0
+    Server.SetPlayersInGame(0)
     Server.SetCurrentRoundTime(Config.Maps[map].RoundTime)
-    GlobalState[States.Global.GameActive] = true
+    Server.SetGameActive(true)
 
     CreateThread(function()
-        while GetRoundTimeLeft() > 0 do
+        while GetIsGameActive() and GetRoundTimeLeft() > 0 do
             Wait(1000)
             GlobalState[States.Global.RoundTimeLeft] = GlobalState[States.Global.RoundTimeLeft] - 1
         end
@@ -122,8 +122,7 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
         local currentKillerLevel = Server.GetCurrentLevel(killerId)
 
         if currentKillerLevel == #Config.Levels then
-            currentWinnerId = killerId
-            Server.SetCurrentRoundTime(0)
+            finishGame(killerId)
             return
         end
 

@@ -14,15 +14,10 @@ function GetLicense(src)
     end
 end
 
+-- Setters & Getters (Player)
+
 function Server.GetCurrentLevel(src)
     return Player(src).state[States.Player.CurrentLevel] ~= nil and Player(src).state[States.Player.CurrentLevel] or 1
-end
-
-function Server.UpdatePlayersInGame(count)
-    if GlobalState[States.Global.PlayersInGame] == 0 and count < 0 then
-        return
-    end
-    GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] + count
 end
 
 function Server.SetCurrentLevel(src, level)
@@ -96,12 +91,29 @@ function Server.GetCurrentTop20PlayerStats()
     return top20PlayerStats
 end
 
+-- Setters (Current Game)
+
 function Server.SetCurrentMap(map)
     GlobalState[States.Global.CurrentMap] = map
 end
 
 function Server.SetCurrentRoundTime(time)
     GlobalState[States.Global.CurrentRoundTime] = time
+end
+
+function Server.SetPlayersInGame(count)
+    GlobalState[States.Global.PlayersInGame] = count
+end
+
+function Server.SetGameActive(active)
+    GlobalState[States.Global.GameActive] = active
+end
+
+function Server.UpdatePlayersInGame(count)
+    if GlobalState[States.Global.PlayersInGame] == 0 and count < 0 then
+        return
+    end
+    GlobalState[States.Global.PlayersInGame] = GlobalState[States.Global.PlayersInGame] + count
 end
 
 Database = {}
