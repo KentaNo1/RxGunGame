@@ -26,8 +26,18 @@ local function spawnPlayer()
     local playerPed = PlayerPedId()
     local randomSpawnPoint = GetRandomSpawnPoint()
 
+    local currentWeapon = GetSelectedPedWeapon(playerPed)
     local levelWeapon = Client.GetCurrentLevelWeapon()
-    GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
+
+    if currentWeapon ~= GetHashKey(levelWeapon) then
+        if HasPedGotWeapon(playerPed, GetHashKey(levelWeapon), false) then
+            SetAmmoInClip(playerPed, GetHashKey(levelWeapon), 9999)
+            SetCurrentPedWeapon(playerPed, GetHashKey(levelWeapon), true)
+        else
+            GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
+            SetAmmoInClip(playerPed, GetHashKey(levelWeapon), 9999)
+        end
+    end
 
     revivePlayer()
     NetworkResurrectLocalPlayer(randomSpawnPoint, false, false)
@@ -99,6 +109,7 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
                     SetCurrentPedWeapon(playerPed, levelWeapon, true)
                 else
                     GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
+                    SetAmmoInClip(playerPed, GetHashKey(levelWeapon), 9999)
                 end
 
                 currentWeapon = GetSelectedPedWeapon(playerPed)
