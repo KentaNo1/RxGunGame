@@ -96,6 +96,14 @@ function Server.GetCurrentTop20PlayerStats()
     return top20PlayerStats
 end
 
+function Server.SetCurrentMap(map)
+    GlobalState[States.Global.CurrentMap] = map
+end
+
+function Server.SetCurrentRoundTime(time)
+    GlobalState[States.Global.CurrentRoundTime] = time
+end
+
 Database = {}
 
 function Database.UpdatePlayerStats(src)

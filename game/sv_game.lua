@@ -11,6 +11,7 @@ GunGame = {}
 GunGame.Players = {}
 
 local finishing = false
+local currentWinnerId = nil
 
 function LeaveGunGame(src)
     if GunGame.Players[src] then
@@ -32,15 +33,15 @@ function LeaveGunGame(src)
     Server.ResetPlayerStates(src)
 end 
 
-local function finishGame(winnerId)
+local function finishGame()
     finishing = true
     GlobalState[States.Global.GameActive] = false
 
-    if not winnerId then
+    if not currentWinnerId then
         Server.Notify(src, Locales[Config.Locale].nobody_won)
     else
-        Server.GivePrizeWinner(winnerId)
-        Server.Notify(src, string.format(Locales[Config.Locale].won_game, GetPlayerName(winnerId)))
+        Server.GivePrizeWinner(currentWinnerId)
+        Server.Notify(src, string.format(Locales[Config.Locale].won_game, GetPlayerName(currentWinnerId)))
     end
 
     for src, player in pairs(GunGame.Players) do
@@ -61,13 +62,14 @@ local function finishGame(winnerId)
 end
 
 local function startGame(map)
-    GlobalState[States.Global.CurrentMap] = map
+    currentWinnerId = nil
+    Server.SetCurrentMap(map)
     GlobalState[States.Global.PlayersInGame] = 0
-    GlobalState[States.Global.RoundTimeLeft] = Config.Maps[map].RoundTime
+    Server.SetCurrentRoundTime(Config.Maps[map].RoundTime)
     GlobalState[States.Global.GameActive] = true
 
     CreateThread(function()
-        while GetIsGameActive() and GetRoundTimeLeft() > 0 do
+        while GetRoundTimeLeft() > 0 do
             Wait(1000)
             GlobalState[States.Global.RoundTimeLeft] = GlobalState[States.Global.RoundTimeLeft] - 1
         end
@@ -105,22 +107,6 @@ RegisterNetEvent("sv_game:leaveGunGame", function ()
 end)
 
 RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
-    if killerId and killerId ~= 0 then
-        Server.SetKills(killerId, Server.GetKills(killerId) + 1) 
-        
-        local currentKillerLevel = Server.GetCurrentLevel(killerId)
-
-        if currentKillerLevel == #Config.Levels then
-            finishGame(killerId)
-            return
-        end
-
-        if currentKillerLevel < #Config.Levels then
-            Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
-            Server.Notify(killerId, string.format(Locales[Config.Locale].level_changed, currentKillerLevel + 1))
-        end
-    end
-
     Server.SetDeaths(victimId, Server.GetDeaths(victimId) + 1)
 
     local currentVictimLevel = Server.GetCurrentLevel(victimId)
@@ -128,6 +114,23 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
     if currentVictimLevel > 1 then
         Server.SetCurrentLevel(victimId, currentVictimLevel - 1)
         Server.Notify(victimId, string.format(Locales[Config.Locale].level_changed, currentVictimLevel - 1))
+    end
+
+    if killerId and killerId ~= 0 then
+        Server.SetKills(killerId, Server.GetKills(killerId) + 1) 
+        
+        local currentKillerLevel = Server.GetCurrentLevel(killerId)
+
+        if currentKillerLevel == #Config.Levels then
+            currentWinnerId = killerId
+            Server.SetCurrentRoundTime(0)
+            return
+        end
+
+        if currentKillerLevel < #Config.Levels then
+            Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
+            Server.Notify(killerId, string.format(Locales[Config.Locale].level_changed, currentKillerLevel + 1))
+        end
     end
 end)
 
