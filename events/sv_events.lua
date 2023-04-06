@@ -7,7 +7,11 @@ local licensesLeftInGame = {}
 AddEventHandler('playerDropped', function()
     local src = source
 
-    if Player(src).state[States.Player.InGame] then
+    if Server.GetInGame(src) then
+        if GunGame.Players[src] then
+            GunGame.Players[src] = nil
+        end
+
         Server.UpdatePlayersInGame(-1)
         Database.UpdatePlayerStats(src)
         licensesLeftInGame[#licensesLeftInGame+1] = GetLicense(src)

@@ -65,7 +65,7 @@ CreateThread(function()
                         if playersInGame >= maximumPlayers then
                             ShowHelpNotification("GunGame is full")
                         else
-                            ShowHelpNotification("Press ~INPUT_CONTEXT~ to join the GunGame lobby")
+                            ShowHelpNotification("Press ~INPUT_CONTEXT~ to join the GunGame")
                             if IsControlJustPressed(0, 38) then
                                 TriggerServerEvent("sv_game:joinGunGame")
                             end
