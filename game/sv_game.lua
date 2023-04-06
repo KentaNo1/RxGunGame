@@ -56,9 +56,11 @@ local function finishGame(winnerId)
         end
 
         Wait(10000)
-        
+
         finishing = false 
     
+        while not GetIsGameActive() do Wait(100) end
+
         for src, player in pairs(GunGame.Players) do
             sendPlayerToNewGame(src)
         end
