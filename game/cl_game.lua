@@ -84,6 +84,8 @@ end)
 RegisterNetEvent("cl_game:joinGunGame", function ()
     spawnPlayer()
     InitializeZone()
+    --exports['ox_inventory']:weaponWheel(true)
+    SetWeaponsNoAutoreload(false)
 
     while not Client.GetInGame() do Wait(0) end
 
@@ -132,6 +134,8 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
     while not IsScreenFadedOut() do Wait(0) end
 
     NetworkResurrectLocalPlayer(Config.JoinLobby.Coords, false, false)
+    --exports['ox_inventory']:weaponWheel(false)
+    SetWeaponsNoAutoreload(true)
     revivePlayer()
     DeleteZone()
     
