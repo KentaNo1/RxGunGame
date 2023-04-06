@@ -55,9 +55,9 @@ local function finishGame(winnerId)
             ShowScoreboard(src, true)
         end
 
-        finishing = false 
-
         Wait(10000)
+        
+        finishing = false 
     
         for src, player in pairs(GunGame.Players) do
             sendPlayerToNewGame(src)
