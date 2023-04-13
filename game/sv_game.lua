@@ -59,13 +59,17 @@ local function finishGame(winnerId)
 
         finishing = false 
     
-        while not GetIsGameActive() do Wait(100) end
-
-        for src, player in pairs(GunGame.Players) do
-            sendPlayerToNewGame(src)
+        if not Config.RxGamesBridge then
+            while not GetIsGameActive() do Wait(100) end
         end
 
         for src, player in pairs(GunGame.Players) do
+            if not Config.RxGamesBridge then
+                sendPlayerToNewGame(src)
+            else
+                LeaveGunGame(src)
+            end
+
             HideBoard(src)
         end
     end
@@ -146,11 +150,23 @@ CreateThread(function()
     while true do
         Wait(1000)
 
-        if not finishing and not GetIsGameActive() then
+        if not Config.RxGamesBridge and not finishing and not GetIsGameActive() then
             local randomMap = math.random(1, #Config.Maps)
             startGame(randomMap)
         end 
     end
+end)
+
+exports('StartGame', function(random, map)
+    local map = map or nil
+    if random then
+        map = math.random(1, #Config.Maps)
+    end
+    startGame(map)
+end)
+
+exports('IsGameFinishing', function()
+    return finishing
 end)
 
 Citizen.CreateThread(function()

@@ -6,6 +6,7 @@ Config = {}
 Locales = {}
 
 Config.Locale = "en"
+Config.RxGamesBridge = true -- Are u using RxGamesBridge as optional dependency?
 Config.Killfeed = true -- Are u using killfeed as optional dependency?
 
 Config.Keybinds = {
@@ -66,7 +67,7 @@ Config.Maps = {
         Label = "Cayo Perico",
         Prize = 1000,
         RespawnTime = 3, -- In Seconds
-        RoundTime = 720, -- In Seconds
+        RoundTime = 10, -- In Seconds
         InvincibleOnSpawnTime = 3, -- In Seconds
         MaximumOutOfZoneTime = 5, -- In Seconds
         MaximumPlayers = 16,
