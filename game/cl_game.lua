@@ -105,6 +105,7 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
                     GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
                 end
                 
+                while not GetSelectedPedWeapon(playerPed) == GetHashKey(levelWeapon) do Wait(0) end
                 currentWeapon = GetSelectedPedWeapon(playerPed)
                 SetAmmoInClip(playerPed, currentWeapon, 9999)
             end
