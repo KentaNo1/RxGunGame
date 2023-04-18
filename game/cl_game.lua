@@ -3,6 +3,7 @@ BY Rejox#7975 © RX
 --]]
 
 local isDead = false
+local givenWeapons = {}
 
 local function revivePlayer()
     local playerPed = PlayerPedId()
@@ -84,7 +85,9 @@ end)
 RegisterNetEvent("cl_game:joinGunGame", function ()
     spawnPlayer()
     InitializeZone()
-    --exports['ox_inventory']:weaponWheel(true)
+    if Config.OxInventory then
+        exports['ox_inventory']:weaponWheel(true)
+    end
     SetWeaponsNoAutoreload(false)
 
     while not Client.GetInGame() do Wait(0) end
@@ -103,6 +106,7 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
                     SetCurrentPedWeapon(playerPed, levelWeapon, true)
                 else
                     GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
+                    givenWeapons[#givenWeapons + 1] = GetHashKey(levelWeapon)
                 end
                 
                 while not GetSelectedPedWeapon(playerPed) == GetHashKey(levelWeapon) do Wait(0) end
@@ -135,14 +139,21 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
     while not IsScreenFadedOut() do Wait(0) end
 
     NetworkResurrectLocalPlayer(Config.JoinLobby.Coords, false, false)
-    --exports['ox_inventory']:weaponWheel(false)
+    if Config.OxInventory then
+        exports['ox_inventory']:weaponWheel(false)
+    end
     SetWeaponsNoAutoreload(true)
     revivePlayer()
     DeleteZone()
     
     while Client.GetInGame() do Wait(0) end
 
-    RemoveAllPedWeapons(playerPed, true)
+    --RemoveAllPedWeapons(playerPed, true)
+    for k, weaponHash in pairs(givenWeapons) do
+        if HasPedGotWeapon(playerPed, weaponHash, false) then
+            RemoveWeaponFromPed(playerPed, weaponHash)
+        end
+    end
 
     DoScreenFadeIn(300)
 end)

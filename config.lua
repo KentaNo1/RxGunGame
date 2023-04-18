@@ -6,8 +6,9 @@ Config = {}
 Locales = {}
 
 Config.Locale = "en"
-Config.RxGamesBridge = true -- Are u using RxGamesBridge as optional dependency?
+Config.RxGamesBridge = false -- Are u using RxGamesBridge as optional dependency?
 Config.Killfeed = true -- Are u using killfeed as optional dependency?
+Config.OxInventory = true -- Are u using ox_inventory?
 
 Config.Keybinds = {
     OpenScoreboardInGame = 48, -- Z by default
