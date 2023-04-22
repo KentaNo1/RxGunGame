@@ -13,5 +13,12 @@ Locales['en'] = {
     ['level'] = "Level",
     ['kd'] = "K/D",
     ['current'] = "Current",
-    ['next'] = "Next"
+    ['next'] = "Next",
+    ['game_name'] = "GunGame",
+    ['map'] = "Map",
+    ['players'] = "Players",
+    ['time_left'] = "Time left",
+    ['preparing_game'] = "Preparing Game..",
+    ['game_full'] = "GunGame is full",
+    ['press_to_join'] = "Press ~INPUT_CONTEXT~ to join the GunGame",
 }

@@ -8,7 +8,8 @@ Locales = {}
 Config.Locale = "en"
 Config.RxGamesBridge = false -- Are u using RxGamesBridge as optional dependency?
 Config.Killfeed = true -- Are u using killfeed as optional dependency?
-Config.OxInventory = true -- Are u using ox_inventory?
+Config.OxInventory = false -- Are u using ox_inventory?
+Config.RemoveGivenWeaponsAfterLeave = true -- Remove all weapons given by this script after player leaves game
 
 Config.Keybinds = {
     OpenScoreboardInGame = 48, -- Z by default
@@ -30,6 +31,7 @@ Config.Commands = {
 }
 
 Config.JoinLobby = {
+    TextFont = 4,
     Blip = {
         Active = true,
         Label = "GunGame Lobby",

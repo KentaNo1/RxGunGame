@@ -149,9 +149,11 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
     while Client.GetInGame() do Wait(0) end
 
     --RemoveAllPedWeapons(playerPed, true)
-    for k, weaponHash in pairs(givenWeapons) do
-        if HasPedGotWeapon(playerPed, weaponHash, false) then
-            RemoveWeaponFromPed(playerPed, weaponHash)
+    if Config.RemoveGivenWeaponsAfterLeave then        
+        for k, weaponHash in pairs(givenWeapons) do
+            if HasPedGotWeapon(playerPed, weaponHash, false) then
+                RemoveWeaponFromPed(playerPed, weaponHash)
+            end
         end
     end
 

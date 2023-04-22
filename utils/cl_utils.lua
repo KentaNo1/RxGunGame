@@ -26,7 +26,7 @@ function Draw3DText(x, y, z, text)
     local scale = scale * fov
     if onScreen then
         SetTextScale(0.0 * scale, 0.55 * scale)
-        SetTextFont(7)
+        SetTextFont(Config.JoinLobby.TextFont)
         SetTextColour(255, 0, 0, 200)
         SetTextOutline()
         SetTextEntry("STRING")

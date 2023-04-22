@@ -56,20 +56,26 @@ CreateThread(function()
                 textHeight = 1.3
             end
 
+            local gameName = Locales[Config.Locale].game_name
+            local preparingGame = Locales[Config.Locale].preparing_game
+
             if gameActive then
                 local playersInGame = GetPlayersInGame()
                 local roundTimeLeft = GetRoundTimeLeft()
                 local currentMap = GetCurrentMap()
                 local maximumPlayers = currentMap.MaximumPlayers
+                local map = Locales[Config.Locale].map
+                local players = Locales[Config.Locale].players
+                local timeLeft = Locales[Config.Locale].time_left
                 Draw3DText(Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z + textHeight, 
-                    "GunGame \n ~r~Map: ~HC_28~" .. currentMap.Label .. " \n ~r~Players: ~HC_28~" .. playersInGame .. "/~HC_28~" .. maximumPlayers .. " \n ~r~Time left: ~HC_28~" .. SecondsToSecondsAndMinutes(roundTimeLeft)
+                    gameName .. " \n ~r~" .. map .. ": ~HC_28~" .. currentMap.Label .. " \n ~r~" .. players .. ": ~HC_28~" .. playersInGame .. "/~HC_28~" .. maximumPlayers .. " \n ~r~" .. timeLeft .. ": ~HC_28~" .. SecondsToSecondsAndMinutes(roundTimeLeft)
                 )
                 if distance <= 1.7 then
                     if not Client.GetInGame() then
                         if playersInGame >= maximumPlayers then
-                            ShowHelpNotification("GunGame is full")
+                            ShowHelpNotification(Locales[Config.Locale].game_full)
                         else
-                            ShowHelpNotification("Press ~INPUT_CONTEXT~ to join the GunGame")
+                            ShowHelpNotification(Locales[Config.Locale].press_to_join)
                             if IsControlJustPressed(0, 38) then
                                 TriggerServerEvent("sv_game:joinGunGame")
                             end
@@ -78,7 +84,7 @@ CreateThread(function()
                 end
             else
                 if not Config.RxGamesBridge then
-                    Draw3DText(Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z + textHeight - 0.2, "GunGame \n ~r~Preparing Game..")
+                    Draw3DText(Config.JoinLobby.Coords.x, Config.JoinLobby.Coords.y, Config.JoinLobby.Coords.z + textHeight - 0.2, gameName .. " \n ~r~" .. preparingGame)
                 end
             end
         end
