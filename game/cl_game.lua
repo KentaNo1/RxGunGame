@@ -92,7 +92,7 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
 
     Client.SetPlayerInGame(true)
     while not Client.GetInGame() do Wait(1000) end
-    
+
     CreateThread(function()
         while Client.GetInGame() do
             Wait(0)
@@ -118,16 +118,15 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             if GetAmmoInPedWeapon(playerPed, currentWeapon) == 0 then
                 SetPedAmmo(playerPed, currentWeapon, 9999)
             end
-            print('debug2')
+
             local stats = Client.GetStats()
             local currentLevel = Config.Levels[stats.level]
             local nextLevel = Config.Levels[stats.level + 1]
             local nextWeapon = nextLevel and nextLevel.WeaponLabel or "None"
-            print('debug3')
+
             local rectangle = { x = 0.0, y = 0.46, w = 0.138, h = 0.25 }
             DrawScreenText("~s~" .. Locales[Config.Locale].kills ..": ~r~" .. stats.kills .. "\n~s~" .. Locales[Config.Locale].deaths ..": ~r~" .. stats.deaths .. "\n~s~" .. Locales[Config.Locale].level ..": ~r~" .. currentLevel.Label .. "\n~s~" .. Locales[Config.Locale].kd ..": ~r~" .. stats.kd, 0.01, 0.35, 0.4, 4, false, false, rectangle)
             DrawScreenText("\n~s~" .. Locales[Config.Locale].current .." \n~r~" .. currentLevel.WeaponLabel .. "\n~s~" .. Locales[Config.Locale].next .." \n~r~" .. nextWeapon, 0.01, 0.45, 0.4, 4, false, false, rectangle2)
-            print('debug4')
         end
     end)
 
