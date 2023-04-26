@@ -89,6 +89,10 @@ function Client.SetOutsideZone(outside)
     LocalPlayer.state:set(States.Player.OutsideZone, outside, true)
 end
 
+function Client.SetPlayerInGame(inGame)
+    LocalPlayer.state:set(States.Player.InGame, inGame, true)
+end
+
 function Client.GetKills()
     return LocalPlayer.state[States.Player.Kills] ~= nil and LocalPlayer.state[States.Player.Kills] or 0
 end
