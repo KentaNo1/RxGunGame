@@ -146,8 +146,9 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
     SetWeaponsNoAutoreload(true)
     revivePlayer()
     DeleteZone()
-    
-    while Client.GetInGame() do Wait(0) end
+
+    Client.SetPlayerInGame(false)
+    while Client.GetInGame() do Wait(1000) end
 
     --RemoveAllPedWeapons(playerPed, true)
     if Config.RemoveGivenWeaponsAfterLeave then        
