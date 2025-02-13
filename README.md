@@ -4,7 +4,7 @@ A gungame with lobby, maps, scoreboard, leaderboard & levels. Your players will 
 (code is from 2 years ago, dont come @ me :D)
 
 ![](https://img.shields.io/github/downloads/rxscripts/RxGunGame/total?logo=github)
-![](https://img.shields.io/github/stars/rxscripts/RxGunGame/total?logo=github)
+![](https://img.shields.io/github/stars/rxscripts/RxGunGame?logo=github)
 
 ## [Download](https://github.com/rxscripts/RxGunGame/releases/latest/download/RxGunGame.zip)
 
