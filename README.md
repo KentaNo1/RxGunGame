@@ -13,37 +13,33 @@ A gungame with lobby, maps, scoreboard, leaderboard & levels. Your players will 
 - [oxmysql](https://github.com/overextended/oxmysql)
 
 ## 🖥️ Installation
-* **Step 1**
-  - Install (*or ensure you have the latest of*) each dependency listed above
-* **Step 2**
-  - Download the latest release of ```RxGunGame```
-* **Step 3**
-  - Extract the zipped folder into your servers main ```resources``` directory
-* **Step 4**
-  - Add ```ensure RxGunGame``` in your ```server.cfg``` file *after* all dependencies
-* **Step 6**
-  - Restart your server & enjoy!
+* 1. Install (*or ensure you have the latest of*) each dependency listed above
+* 2. Download the latest release of ```RxGunGame```
+* 3. Extract the zipped folder into your servers main ```resources``` directory
+* 4. Add ```ensure RxGunGame``` in your ```server.cfg``` file *after* all dependencies
+* 5. Executee ```GunGame.sql``` in your ```database```
+* 6. Restart your server & enjoy!
 
-## Ace Permissions
+### Ace Permissions
 - `gungame.admin` - Allows access to all GunGame Admin commands
 
-## Server Exports
+### Server Exports
 - `StartGame(random, map)`: Starts a Game with specified Map, if random is true then it uses a random map.
 - `IsGameFinishing()`: Returns whether the game is finishing or not.
 
-## Client Exports
+### Client Exports
 - `IsInGame()`: Returns whether the player is in game.
 
-## States
+### States
 ***Note:*** *These states are all configurable.*
 
-### Server States
+#### Server States
 - `RX:GunGame:ActiveGame`
 - `RX:GunGame:CurrentMap`
 - `RX:GunGame:PlayersInGame`
 - `RX:GunGame:RoundTimeLeft`
 
-### Client States
+#### Client States
 - `RX:GunGame:InGame`
 - `RX:GunGame:CurrentLevel`
 - `RX:GunGame:OutsideZone`
