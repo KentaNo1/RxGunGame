@@ -1,5 +1,9 @@
 --[[
-BY Rejox#7975 © RX
+    CREATED BY:
+    https://store.rxscripts.xyz/
+
+    JOIN DIS FOR MORE SCRIPTS:
+    https://discord.gg/DHnjcW96an
 --]]
 
 Server = {}
@@ -68,7 +72,7 @@ end
 
 function Server.GetCurrentTop20PlayerStats()
     local top20PlayerStats = {}
-    
+
     for k, v in pairs(GunGame.Players) do
         local stats = Server.GetStats(k)
 
@@ -145,6 +149,6 @@ function Database.GetTop20PlayerStats()
             }
         end
     end
-    
+
     return top20PlayerStats
 end

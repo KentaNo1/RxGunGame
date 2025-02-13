@@ -1,5 +1,9 @@
 --[[
-BY RX Scripts © rxscripts.xyz
+    CREATED BY:
+    https://store.rxscripts.xyz/
+
+    JOIN DIS FOR MORE SCRIPTS:
+    https://discord.gg/DHnjcW96an
 --]]
 
 Locales = {}

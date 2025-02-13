@@ -1,3 +1,11 @@
+--[[
+    CREATED BY:
+    https://store.rxscripts.xyz/
+
+    JOIN DIS FOR MORE SCRIPTS:
+    https://discord.gg/DHnjcW96an
+--]]
+
 Locales['en'] = {
     ['leaderboard_reset'] = "Leaderboard has been reset!",
     ['no_permission'] = "You do not have permission to do this!",

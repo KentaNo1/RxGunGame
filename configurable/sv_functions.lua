@@ -1,8 +1,11 @@
 --[[
-BY Rejox#7975 © RX
+    CREATED BY:
+    https://store.rxscripts.xyz/
+
+    JOIN DIS FOR MORE SCRIPTS:
+    https://discord.gg/DHnjcW96an
 --]]
 
--- [[ DON'T TOUCH THIS UNLESS YOU KNOW WHAT YOU'RE DOING ]] --
 function Server.Notify(src, message)
     if src == -1 then
         for playerId, _ in pairs(GunGame.Players) do

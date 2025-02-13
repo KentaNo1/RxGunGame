@@ -6,7 +6,8 @@
     https://discord.gg/DHnjcW96an
 --]]
 
-fx_version 'cerulean'mes { 'gta5' }
+fx_version 'cerulean'
+games { 'gta5' }
 
 author 'rxscripts'
 name 'RxGunGame'

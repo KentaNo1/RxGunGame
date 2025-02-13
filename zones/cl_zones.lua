@@ -1,5 +1,9 @@
 --[[
-BY Rejox#7975 © RX
+    CREATED BY:
+    https://store.rxscripts.xyz/
+
+    JOIN DIS FOR MORE SCRIPTS:
+    https://discord.gg/DHnjcW96an
 --]]
 
 Zone = nil
