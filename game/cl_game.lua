@@ -1,5 +1,6 @@
 --[[
-BY Rejox#7975 © RX
+    CREATED BY
+
 --]]
 
 local isDead = false
@@ -61,7 +62,7 @@ function OnDeath(victimPed, killerPed)
     CreateThread(function()
         while respawnTimer > 0 and Client.GetInGame() do
             Wait(0)
-            DrawScreenText(string.format(Locales[Config.Locale].respawning, respawnTimer), 0.5, 0.83, 0.7, 4, true, true)
+            DrawScreenText(_L('respawning', respawnTimer), 0.5, 0.83, 0.7, 4, true, true)
         end
     end)
 
@@ -70,7 +71,7 @@ function OnDeath(victimPed, killerPed)
             Wait(1000)
             respawnTimer = respawnTimer - 1
         end
-    
+
         if Client.GetInGame() and isDead then
             spawnPlayer()
         end
@@ -85,9 +86,7 @@ end)
 RegisterNetEvent("cl_game:joinGunGame", function ()
     spawnPlayer()
     InitializeZone()
-    if Config.OxInventory then
-        exports['ox_inventory']:weaponWheel(true)
-    end
+    FM.inventory.setWeaponWheel(true)
     SetWeaponsNoAutoreload(false)
 
     Client.SetPlayerInGame(true)
@@ -109,7 +108,7 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
                     GiveWeaponToPed(playerPed, GetHashKey(levelWeapon), 9999, false, true)
                     givenWeapons[#givenWeapons + 1] = GetHashKey(levelWeapon)
                 end
-                
+
                 while not GetSelectedPedWeapon(playerPed) == GetHashKey(levelWeapon) do Wait(0) end
                 currentWeapon = GetSelectedPedWeapon(playerPed)
                 SetAmmoInClip(playerPed, currentWeapon, 9999)
@@ -125,8 +124,8 @@ RegisterNetEvent("cl_game:joinGunGame", function ()
             local nextWeapon = nextLevel and nextLevel.WeaponLabel or "None"
 
             local rectangle = { x = 0.0, y = 0.46, w = 0.138, h = 0.25 }
-            DrawScreenText("~s~" .. Locales[Config.Locale].kills ..": ~r~" .. stats.kills .. "\n~s~" .. Locales[Config.Locale].deaths ..": ~r~" .. stats.deaths .. "\n~s~" .. Locales[Config.Locale].level ..": ~r~" .. currentLevel.Label .. "\n~s~" .. Locales[Config.Locale].kd ..": ~r~" .. stats.kd, 0.01, 0.35, 0.4, 4, false, false, rectangle)
-            DrawScreenText("\n~s~" .. Locales[Config.Locale].current .." \n~r~" .. currentLevel.WeaponLabel .. "\n~s~" .. Locales[Config.Locale].next .." \n~r~" .. nextWeapon, 0.01, 0.45, 0.4, 4, false, false, rectangle2)
+            DrawScreenText("~s~" .. _L('kills') ..": ~r~" .. stats.kills .. "\n~s~" .. _L('deaths') ..": ~r~" .. stats.deaths .. "\n~s~" .. _L('level') ..": ~r~" .. currentLevel.Label .. "\n~s~" .. _L('kd') ..": ~r~" .. stats.kd, 0.01, 0.35, 0.4, 4, false, false, rectangle)
+            DrawScreenText("\n~s~" .. _L('current') .." \n~r~" .. currentLevel.WeaponLabel .. "\n~s~" .. _L('next') .." \n~r~" .. nextWeapon, 0.01, 0.45, 0.4, 4, false, false, rectangle2)
         end
     end)
 
@@ -140,28 +139,23 @@ RegisterNetEvent("cl_game:leaveGunGame", function ()
     while not IsScreenFadedOut() do Wait(0) end
 
     NetworkResurrectLocalPlayer(Config.JoinLobby.Coords, false, false)
-    if Config.OxInventory then
-        exports['ox_inventory']:weaponWheel(false)
-    end
+    FM.inventory.setWeaponWheel(false)
     SetWeaponsNoAutoreload(true)
     revivePlayer()
     DeleteZone()
-    
+
     Client.SetPlayerInGame(false)
     while Client.GetInGame() do Wait(100) end
 
-    --RemoveAllPedWeapons(playerPed, true)
-    if Config.RemoveGivenWeaponsAfterLeave then        
-        for k, weaponHash in pairs(givenWeapons) do
-            if HasPedGotWeapon(playerPed, weaponHash, false) then
-                RemoveWeaponFromPed(playerPed, weaponHash)
-            end
+    for k, weaponHash in pairs(givenWeapons) do
+        if HasPedGotWeapon(playerPed, weaponHash, false) then
+            RemoveWeaponFromPed(playerPed, weaponHash)
         end
     end
 
     DoScreenFadeIn(300)
 end)
 
-Citizen.CreateThread(function()
-    print("^2Successfully loaded ^5" .. GetCurrentResourceName() .. " ^2by ^5Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
+exports('IsInGame', function()
+    return Client.GetInGame()
 end)

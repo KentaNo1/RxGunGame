@@ -51,7 +51,7 @@ end
 
 function RequestWeapon(weapon)
     local weaponHash = GetHashKey(weapon)
-    
+
     if not IsWeaponValid(weaponHash) then
         return
     end
@@ -82,11 +82,11 @@ function Client.GetCurrentLevelWeapon()
 end
 
 function Client.GetOutsideZone()
-    return LocalPlayer.state[States.Player.OutsideZone]
+    return not IsInsideZone
 end
 
 function Client.SetOutsideZone(outside)
-    LocalPlayer.state:set(States.Player.OutsideZone, outside, true)
+    IsInsideZone = not outside
 end
 
 function Client.SetPlayerInGame(inGame)

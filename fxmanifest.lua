@@ -1,27 +1,33 @@
 --[[
-BY Rejox#7975 © RX
+    CREATED BY:
+    https://store.rxscripts.xyz/
+
+    JOIN DIS FOR MORE SCRIPTS:
+    https://discord.gg/DHnjcW96an
 --]]
 
-fx_version 'cerulean'
-games { 'gta5' }
+fx_version 'cerulean'mes { 'gta5' }
 
-author 'Rejox'
-description 'FFA GunGame'
+author 'rxscripts'
+name 'RxGunGame'
+repository 'RxGunGame'
+description 'RX | FFA GunGame'
 version '1.0.0'
 
 shared_script {
+    '@ox_lib/init.lua',
     'config.lua',
     'utils/sh_utils.lua',
-    'locales/*.lua'
+    'init.lua',
+    'locales/*.lua',
 }
 
 client_scripts {
-    '@PolyZone/client.lua',
     'utils/cl_utils.lua',
     'boards/cl_boards.lua',
+    'zones/cl_zones.lua',
     'game/cl_game.lua',
     'lobby/cl_lobby.lua',
-    'zones/cl_zones.lua',
     'commands/cl_commands.lua',
     'events/cl_events.lua',
 }
@@ -42,15 +48,4 @@ files {
     'html/script.js',
 }
 
-dependencies {
-    'oxmysql',
-    'PolyZone'
-}
-
 lua54 'yes'
-
-escrow_ignore {
-    'config.lua',
-    'configurable/*.lua',
-    'locales/*.lua'
-}

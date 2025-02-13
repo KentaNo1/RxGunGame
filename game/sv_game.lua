@@ -17,10 +17,6 @@ function LeaveGunGame(src)
         GunGame.Players[src] = nil
     end
 
-    if Config.Killfeed then
-        exports['killfeed']:RemovePlayerFromLobby(src, 'gungame')  
-    end
-
     TriggerClientEvent("cl_game:leaveGunGame", src)
     Wait(300)
 
@@ -30,7 +26,7 @@ function LeaveGunGame(src)
     Server.UpdatePlayersInGame(-1)
     Database.UpdatePlayerStats(src)
     Server.ResetPlayerStates(src)
-end 
+end
 
 local function sendPlayerToNewGame(src)
     Server.UpdatePlayersInGame(1)
@@ -43,32 +39,26 @@ local function finishGame(winnerId)
     if not finishing then
         finishing = true
         Server.SetGameActive(false)
-    
+
         if not winnerId then
-            Server.Notify(-1, Locales[Config.Locale].nobody_won)
+            Server.Notify(-1, _L('nobody_won'))
         else
             Server.GivePrizeWinner(winnerId)
-            Server.Notify(-1, string.format(Locales[Config.Locale].won_game, GetPlayerName(winnerId)))
+            Server.Notify(-1, _L('won_game', GetPlayerName(winnerId)))
         end
-    
+
         for src, player in pairs(GunGame.Players) do
             ShowScoreboard(src, true)
         end
 
         Wait(10000)
 
-        finishing = false 
-    
-        if not Config.RxGamesBridge then
-            while not GetIsGameActive() do Wait(100) end
-        end
+        finishing = false
+
+        while not GetIsGameActive() do Wait(100) end
 
         for src, player in pairs(GunGame.Players) do
-            if not Config.RxGamesBridge then
-                sendPlayerToNewGame(src)
-            else
-                LeaveGunGame(src)
-            end
+            sendPlayerToNewGame(src)
 
             HideBoard(src)
         end
@@ -98,10 +88,6 @@ RegisterNetEvent("sv_game:joinGunGame", function ()
         GunGame.Players[src] = true
     end
 
-    if Config.Killfeed then
-        exports['killfeed']:AddPlayerToLobby(src, 'gungame')  
-    end
-
     Server.ResetPlayerStates(src)
 
     TriggerClientEvent("cl_game:joinGunGame", src)
@@ -126,12 +112,12 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
 
     if currentVictimLevel > 1 then
         Server.SetCurrentLevel(victimId, currentVictimLevel - 1)
-        Server.Notify(victimId, string.format(Locales[Config.Locale].level_changed, currentVictimLevel - 1))
+        Server.Notify(victimId, _L('level_changed', currentVictimLevel - 1))
     end
 
     if killerId and killerId ~= 0 then
-        Server.SetKills(killerId, Server.GetKills(killerId) + 1) 
-        
+        Server.SetKills(killerId, Server.GetKills(killerId) + 1)
+
         local currentKillerLevel = Server.GetCurrentLevel(killerId)
 
         if currentKillerLevel == #Config.Levels then
@@ -141,7 +127,7 @@ RegisterNetEvent("sv_game:onDeath", function(victimId, killerId)
 
         if currentKillerLevel < #Config.Levels then
             Server.SetCurrentLevel(killerId, currentKillerLevel + 1)
-            Server.Notify(killerId, string.format(Locales[Config.Locale].level_changed, currentKillerLevel + 1))
+            Server.Notify(killerId, _L('level_changed', currentKillerLevel + 1))
         end
     end
 end)
@@ -150,10 +136,10 @@ CreateThread(function()
     while true do
         Wait(1000)
 
-        if not Config.RxGamesBridge and not finishing and not GetIsGameActive() then
+        if not finishing and not GetIsGameActive() then
             local randomMap = math.random(1, #Config.Maps)
             startGame(randomMap)
-        end 
+        end
     end
 end)
 
@@ -167,8 +153,4 @@ end)
 
 exports('IsGameFinishing', function()
     return finishing
-end)
-
-Citizen.CreateThread(function()
-    print("^2Successfully loaded ^9" .. GetCurrentResourceName() .. " ^2by ^9Rejox#7975 ^6(https://discord.gg/fyzcj8dAkq)")
 end)

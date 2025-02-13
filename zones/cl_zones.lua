@@ -2,42 +2,32 @@
 BY Rejox#7975 © RX
 --]]
 
-local zone = nil
+Zone = nil
+IsInsideZone = false
 
 function DeleteZone()
-    if zone then
-        zone:destroy()
-        zone = nil
+    if Zone then
+        Zone:remove()
+        Zone = nil
     end
 end
 
 function InitializeZone()
-    if zone ~= nil then
+    if Zone ~= nil then
         DeleteZone()
     end
-    
-    zone = {}
 
     local currentMap = GetCurrentMap()
 
-    zone = PolyZone:Create(currentMap.Zone, { 
-        name = currentMap.Label,
-        minZ = 0,
-        maxZ = 150,
-        debugPoly = true,
-        debugColors = {
-            walls = { 255, 0, 0 },
-            outline = { 0, 0, 0 },
-            grid = { 0, 255, 0 },
-        }
-    })
-
-    zone:onPlayerInOut(function(inside, point)
-        if inside then
+    Zone = lib.zones.poly({
+        points = currentMap.Zone,
+        thickness = 150,
+        debug = true,
+        onEnter = function()
             Client.SetOutsideZone(false)
-
             StopScreenEffect("Rampage")
-        else
+        end,
+        onExit = function()
             Client.SetOutsideZone(true)
 
             StartScreenEffect("Rampage", 0, false)
@@ -47,16 +37,16 @@ function InitializeZone()
             CreateThread(function()
                 while maximumOutOfZoneTime > 0 and Client.GetInGame() and Client.GetOutsideZone() do
                     Wait(0)
-                    DrawScreenText(string.format(Locales[Config.Locale].leaving, maximumOutOfZoneTime), 0.5, 0.83, 0.7, 4, true, true)
+                    DrawScreenText(_L('leaving', maximumOutOfZoneTime), 0.5, 0.83, 0.7, 4, true, true)
                 end
             end)
-        
+
             CreateThread(function()
                 while maximumOutOfZoneTime > 0 and Client.GetInGame() and Client.GetOutsideZone() do
                     Wait(1000)
                     maximumOutOfZoneTime = maximumOutOfZoneTime - 1
                 end
-    
+
                 if Client.GetInGame() and Client.GetOutsideZone() then
                     TriggerServerEvent("sv_game:leaveGunGame")
                     Wait(300)
@@ -64,5 +54,5 @@ function InitializeZone()
                 end
             end)
         end
-    end)
+    })
 end

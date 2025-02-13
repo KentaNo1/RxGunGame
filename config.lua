@@ -3,13 +3,8 @@ BY Rejox#7975 © RX
 --]]
 
 Config = {}
-Locales = {}
 
 Config.Locale = "en"
-Config.RxGamesBridge = false -- Are u using RxGamesBridge as optional dependency?
-Config.Killfeed = true -- Are u using killfeed as optional dependency?
-Config.OxInventory = false -- Are u using ox_inventory?
-Config.RemoveGivenWeaponsAfterLeave = true -- Remove all weapons given by this script after player leaves game
 
 Config.Keybinds = {
     OpenScoreboardInGame = 48, -- Z by default
@@ -64,13 +59,13 @@ Config.Levels = {
         WeaponLabel = "Machete",
     }
 }
-    
+
 Config.Maps = {
     [1] = {
         Label = "Cayo Perico",
         Prize = 1000,
         RespawnTime = 3, -- In Seconds
-        RoundTime = 10, -- In Seconds
+        RoundTime = 120, -- In Seconds
         InvincibleOnSpawnTime = 3, -- In Seconds
         MaximumOutOfZoneTime = 5, -- In Seconds
         MaximumPlayers = 16,
@@ -84,15 +79,15 @@ Config.Maps = {
             vector4(5203.2148, -5119.3423, 6.1443, 244.2429),
         },
         Zone = {
-            vector2(5115.9438476562, -5073.5717773438),
-            vector2(5108.1323242188, -5123.3901367188),
-            vector2(5107.052734375, -5194.888671875),
-            vector2(5108.8174, -5251.2764),
-            vector2(5135.9262695312, -5293.611328125),
-            vector2(5176.1103515625, -5292.875),
-            vector2(5227.7583007812, -5261.6484375),
-            vector2(5226.427734375, -5105.4755859375),
-            vector2(5167.0122070312, -5074.8315429688)
+            vector3(5115.9438476562, -5073.5717773438, 0.0),
+            vector3(5108.1323242188, -5123.3901367188, 0.0),
+            vector3(5107.052734375, -5194.888671875, 0.0),
+            vector3(5108.8174, -5251.2764, 0.0),
+            vector3(5135.9262695312, -5293.611328125, 0.0),
+            vector3(5176.1103515625, -5292.875, 0.0),
+            vector3(5227.7583007812, -5261.6484375, 0.0),
+            vector3(5226.427734375, -5105.4755859375, 0.0),
+            vector3(5167.0122070312, -5074.8315429688, 0.0)
         }
     }
 }
@@ -122,4 +117,12 @@ States.Player = {
     Deaths = 'RX:GunGame:Deaths',
 }
 
-
+--[[
+    ONLY CHANGE THIS PART IF YOU HAVE RENAMED SCRIPTS SUCH AS FRAMEWORK, TARGET, INVENTORY ETC
+    RENAME THE SCRIPT NAME TO THE NEW NAME
+--]]
+---@type table Only change these if you have changed the name of a resource
+Resources = {
+    FM = { name = 'fmLib', export = 'new' },
+}
+IgnoreScriptFoundLogs = false
