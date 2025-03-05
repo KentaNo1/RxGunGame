@@ -14,12 +14,12 @@ A gungame with lobby, maps, scoreboard, leaderboard & levels. Your players will 
 - [oxmysql](https://github.com/overextended/oxmysql)
 
 ## 🖥️ Installation
-* 1. Install (*or ensure you have the latest of*) each dependency listed above
-* 2. Download the latest release of ```RxGunGame```
-* 3. Extract the zipped folder into your servers main ```resources``` directory
-* 4. Add ```ensure RxGunGame``` in your ```server.cfg``` file *after* all dependencies
-* 5. Executee ```GunGame.sql``` in your ```database```
-* 6. Restart your server & enjoy!
+1. Install (*or ensure you have the latest of*) each dependency listed above
+2. Download the latest release of ```RxGunGame```
+3. Extract the zipped folder into your servers main ```resources``` directory
+4. Add ```ensure RxGunGame``` in your ```server.cfg``` file *after* all dependencies
+5. Executee ```GunGame.sql``` in your ```database```
+6. Restart your server & enjoy!
 
 ### Ace Permissions
 - `gungame.admin` - Allows access to all GunGame Admin commands

@@ -2,7 +2,7 @@
     CREATED BY:
     https://store.rxscripts.xyz/
 
-    JOIN DIS FOR MORE SCRIPTS:
+    JOIN DISCORD FOR MORE SCRIPTS:
     https://discord.gg/DHnjcW96an
 --]]
 
@@ -13,7 +13,7 @@ author 'rxscripts'
 name 'RxGunGame'
 repository 'RxGunGame'
 description 'RX | FFA GunGame'
-version '1.0.0'
+version '1.0.1'
 
 shared_script {
     '@ox_lib/init.lua',
